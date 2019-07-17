@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 router.post('/category/add', function (req, res, next) {
 
     if (!req.body.addCategory) {
-        res.render('success', {title: 'Admin', msg: 'Please pass correct data.'});
+        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
     }
     else {
         Category
@@ -56,7 +56,7 @@ router.post('/category/add', function (req, res, next) {
                             })
                             .then((temp) => {
                                 res.render('success', {
-                                    title: 'Admin',
+                                    title: 'Result',
                                     msg: 'Successfully created.',
                                     items: temp
                                 });
@@ -67,7 +67,7 @@ router.post('/category/add', function (req, res, next) {
                         CategoriesHandler.FindAll(Category)
                             .then((temp) => {
                                 res.render('success', {
-                                    title: 'Admin',
+                                    title: 'Result',
                                     msg: `${err.expected._message}.You can enter only Latin letters`,
                                     items: temp
                                 });
@@ -78,7 +78,7 @@ router.post('/category/add', function (req, res, next) {
                 else {
                     CategoriesHandler.FindAll(Category)
                         .then((temp) => {
-                            res.render('success', {title: 'Admin', msg: 'Category already exist.', items: temp});
+                            res.render('success', {title: 'Result', msg: 'Category already exist.', items: temp});
                         })
                         .catch(err => console.log(err));
                 }
@@ -92,17 +92,30 @@ router.post('/category/add', function (req, res, next) {
 router.post('/category/delete', function (req, res, next) {
 
     if (!req.body.removeCategory) {
-        res.render('success', {title: 'Admin', msg: 'Please pass correct data.'});
+        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
     }
     else {
-        Category.deleteOne({"category": req.body.removeCategory}, function (err, result) {
-            assert.equal(null, err);
-            res.render('success', {title: 'Admin', msg: 'Successfully deleted.'})
-        });
+        try {
+            Category.deleteOne({"category": req.body.removeCategory}, function (err, result) {
+                assert.equal(null, err);
+                res.render('success', {title: 'Result', msg: 'Successfully deleted.'})
+            });
+        }
+        catch (err) {
+            CategoriesHandler.FindAll(Category)
+                .then((temp) => {
+                    res.render('success', {
+                        title: 'Result',
+                        msg: `${err.expected._message}.Delete failed.`,
+                        items: temp
+                    });
+                })
+                .catch(err => console.log(err));
+        }
     }
 });
 
-/* POST create new category.*/
+/* POST create new user.*/
 router.post('/user/add', multer({
     storage: storageConfig,
     fileFilter: fileFilter
@@ -113,11 +126,9 @@ router.post('/user/add', multer({
             // if it new category, we created it in database else send msg to user that such category exist
             if (!user) {
                 try {
-                    console.log(req.file);
-                    console.log(req.file.filename);
+
                     UserHandler.CreateUser(req)
                         .then(newUser => {
-                            console.log('novuy user:', newUser);
 
                             let error = newUser.validateSync();
                             assert.equal(null, error);
@@ -136,7 +147,7 @@ router.post('/user/add', multer({
                                 })
                                 .then((temp) => {
                                     res.render('success', {
-                                        title: 'Admin',
+                                        title: 'Result',
                                         msg: 'Successfully created.',
                                         items: temp
                                     });
@@ -149,7 +160,7 @@ router.post('/user/add', multer({
                     CategoriesHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {
-                                title: 'Admin',
+                                title: 'Result',
                                 msg: `${err.expected._message}.You can enter only Latin letters`,
                                 items: temp
                             });
@@ -160,7 +171,7 @@ router.post('/user/add', multer({
             else {
                 CategoriesHandler.FindAll(Category)
                     .then((temp) => {
-                        res.render('success', {title: 'Admin', msg: 'User already exist.', items: temp});
+                        res.render('success', {title: 'Result', msg: 'User already exist.', items: temp});
                     })
                     .catch(err => console.log(err));
             }
@@ -168,17 +179,13 @@ router.post('/user/add', multer({
         .catch(err => console.log(err));
 });
 
+/* POST update user.*/
 router.post('/user/update', multer({
     storage: storageConfig,
     fileFilter: fileFilter
 }).single('newAvatar'), function (req, res, next) {
 
     User.findOne({username: req.body.updateUserName})
-    // Page.updateOne({"title": page.title}, {$set: item}, (err) => {
-    //     assert.equal(null, err);
-    //     console.log('item updated');
-    // });
-    // res.render('success', {title: 'Admin', msg: 'Successful updated page content.'})
         .then((user) => {
             if (!user) {
                 CategoriesHandler.FindAll(Category)
@@ -194,8 +201,6 @@ router.post('/user/update', multer({
             }
             else {
                 try {
-                    console.log(req.file);
-                    console.log(req.file.filename);
                     const item = UserHandler.CheckUpdate(req);
 
                     user.updateOne({"username": req.body.updateUserName}, {$set: item}, (err) => {
@@ -227,5 +232,41 @@ router.post('/user/update', multer({
             }
         })
         .catch(err => console.log(err));
+});
+
+
+/* POST delete user. */
+router.post('/user/delete', function (req, res, next) {
+
+    if (!req.body.removeUser) {
+        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
+    }
+    else {
+        try {
+            User.deleteOne({"username": req.body.removeUser}, function (err, result) {
+                assert.equal(null, err);
+                CategoriesHandler.FindAll(Category)
+                    .then((temp) => {
+                        res.render('success', {
+                            title: 'Result',
+                            msg: `Successfully deleted`,
+                            items: temp
+                        });
+                    })
+                    .catch(err => console.log(err));
+            });
+        }
+        catch (err) {
+            CategoriesHandler.FindAll(Category)
+                .then((temp) => {
+                    res.render('success', {
+                        title: 'Result',
+                        msg: `${err.expected._message}.Operation failed.`,
+                        items: temp
+                    });
+                })
+                .catch(err => console.log(err));
+        }
+    }
 });
 module.exports = router;

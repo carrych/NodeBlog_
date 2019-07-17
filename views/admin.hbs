@@ -89,7 +89,7 @@
                 <div class="bg-white p-30 box-shadow mb-15">
                     <!-- Section Title -->
                     <div class="section-heading">
-                        <h5>Create or delete category</h5>
+                        <h5>Create category</h5>
                     </div>
 
                     <form action="/admin/category/add" method="post">
@@ -99,6 +99,17 @@
                         </div>
                         <button type="submit" class="btn mag-btn mt-30 mb-30">Create</button>
                     </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white p-30 box-shadow mb-15">
+                    <!-- Section Title -->
+                    <div class="section-heading">
+                        <h5>Delete category</h5>
+                    </div>
 
                     <form action="/admin/category/delete" method="post">
                         <div class="form-group">
@@ -143,6 +154,7 @@
                         </div>
                         <button type="submit" class="btn mag-btn mt-30">Create</button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -182,6 +194,26 @@
                         </div>
                         <button type="submit" class="btn mag-btn mt-30">Update</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white p-30 box-shadow mb-15">
+                    <!-- Section Title -->
+                    <div class="section-heading">
+                        <h5>Delete user</h5>
+                    </div>
+
+                    <form action="/admin/user/delete" method="post">
+                        <div class="form-group">
+                            <label>Delete user</label>
+                            <input type="text" class="form-control" name="removeUser"
+                                   placeholder="Enter user for remove">
+                        </div>
+                        <button type="submit" class="btn mag-btn mt-30">Delete</button>
+                    </form>
+
                 </div>
             </div>
         </div>
