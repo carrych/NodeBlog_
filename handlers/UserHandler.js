@@ -1,19 +1,13 @@
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
-const multer = require('multer');
-const {storageConfig, fileFilter} = require('../configs/multer.config');
 
 class UserHandler {
 
 //if we have img in req.body - create user with this img else use default img
 
     async CreateUser(in_request) {
-        console.log('we in CreateUser');
-        const username = in_request.body.username;
-        const password = in_request.body.password;
-        const email = in_request.body.email;
-        const role = in_request.body.role;
-        const avatar = in_request.file.filename;
+
+        const {username, password, email, role, avatar} = in_request.body;
 
         let newUser = new User({
             _id: mongoose.mongo.ObjectId(),
@@ -32,13 +26,9 @@ class UserHandler {
 // check fields of req.body and return tempUser for update
 
     async CheckUpdate(in_request) {
-        const tempUser = {};
 
-        const newUserName = in_request.body.newUserName;
-        const newPassword = in_request.body.newPassword;
-        const newEmail = in_request.body.newEmail;
-        const newRole = in_request.body.newRole;
-        const newAvatar = in_request.file.filename;
+        const tempUser = {};
+        const {newUserName, newPassword, newEmail, newRole, newAvatar} = in_request.body;
 
         if (newUserName) {
             tempUser.username = newUserName;

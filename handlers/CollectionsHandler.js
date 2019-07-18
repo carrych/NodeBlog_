@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 
-class CategoriesHandler {
+class CollectionsHandler {
 
     async FindAll(collection) {
         let temp = await collection
@@ -14,6 +14,17 @@ class CategoriesHandler {
             .then(tempArr => tempArr);
         return temp;
     }
+
+    FindAllPromise(collection, errMsg) {
+        return new Promise((resolve, reject) => {
+            const res = this.FindAll(collection);
+            if (res) {
+                resolve(res);
+            } else {
+                reject(errMsg);
+            }
+        })
+    }
 }
 
-module.exports = new CategoriesHandler;
+module.exports = new CollectionsHandler;

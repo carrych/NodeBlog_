@@ -1,20 +1,20 @@
 let express = require('express');
-const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
 let router = express.Router();
+const multer = require('multer');
 const mongoose = require('mongoose');
 const assert = require('assert');
-const CategoriesHandler = require('../handlers/CategoriesHandler');
+const CollectionsHandler = require('../handlers/CollectionsHandler');
 const User = require('../models/user.model');
 const Category = require('../models/category.model');
 const {storageConfig, fileFilter} = require('../configs/multer.config');
 const UserHandler = require('../handlers/UserHandler');
+const ErrorMsg = require('../handlers/ErrorMsg');
 
 
 /* GET admin page. */
 router.get('/', function (req, res, next) {
 
-    CategoriesHandler.FindAll(Category)
+    CollectionsHandler.FindAll(Category)
         .then((temp) => {
             res.render('admin', {items: temp});
         })
@@ -24,19 +24,21 @@ router.get('/', function (req, res, next) {
 /* POST create new category*/
 router.post('/category/add', function (req, res, next) {
 
-    if (!req.body.addCategory) {
+    const {addCategory} = req.body;
+
+    if (!addCategory) {
         res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
     }
     else {
         Category
-            .findOne({category: req.body.addCategory})
+            .findOne({category: addCategory})
             .then((category) => {
                 // if it new category, we created it in database else send msg to user that such category exist
                 if (!category) {
                     try {
                         const newCategory = new Category({
                             _id: mongoose.mongo.ObjectId(),
-                            category: req.body.addCategory
+                            category: addCategory
                         });
 
                         let error = newCategory.validateSync();
@@ -45,14 +47,9 @@ router.post('/category/add', function (req, res, next) {
                         newCategory
                             .save()
                             .then(() => {
-                                return new Promise((resolve, reject) => {
-                                    const res = CategoriesHandler.FindAll(Category);
-                                    if (res) {
-                                        resolve(res);
-                                    } else {
-                                        reject('Error. Can`t find all categories.');
-                                    }
-                                })
+
+                                CollectionsHandler.FindAllPromise(Category, ErrorMsg.CantFind('categories'))
+
                             })
                             .then((temp) => {
                                 res.render('success', {
@@ -64,7 +61,7 @@ router.post('/category/add', function (req, res, next) {
                             .catch(err => console.log(err));
                     }
                     catch (err) {
-                        CategoriesHandler.FindAll(Category)
+                        CollectionsHandler.FindAll(Category)
                             .then((temp) => {
                                 res.render('success', {
                                     title: 'Result',
@@ -76,7 +73,7 @@ router.post('/category/add', function (req, res, next) {
                     }
                 }
                 else {
-                    CategoriesHandler.FindAll(Category)
+                    CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {title: 'Result', msg: 'Category already exist.', items: temp});
                         })
@@ -91,22 +88,27 @@ router.post('/category/add', function (req, res, next) {
 /* POST delete category. */
 router.post('/category/delete', function (req, res, next) {
 
-    if (!req.body.removeCategory) {
+    const {removeCategory} = req.body;
+
+    if (!removeCategory) {
         res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
     }
     else {
         try {
-            Category.deleteOne({"category": req.body.removeCategory}, function (err, result) {
+            Category.deleteOne({"category": removeCategory}, function (err, result) {
                 assert.equal(null, err);
                 res.render('success', {title: 'Result', msg: 'Successfully deleted.'})
             });
         }
         catch (err) {
-            CategoriesHandler.FindAll(Category)
+
+            const {_message} = err.expected;
+
+            CollectionsHandler.FindAll(Category)
                 .then((temp) => {
                     res.render('success', {
                         title: 'Result',
-                        msg: `${err.expected._message}.Delete failed.`,
+                        msg: `${_message}.Delete failed.`,
                         items: temp
                     });
                 })
@@ -121,7 +123,9 @@ router.post('/user/add', multer({
     fileFilter: fileFilter
 }).single('avatar'), function (req, res, next) {
 
-    User.findOne({username: req.body.username})
+    const {username} = req.body;
+
+    User.findOne({username: username})
         .then((user) => {
             // if it new category, we created it in database else send msg to user that such category exist
             if (!user) {
@@ -136,14 +140,9 @@ router.post('/user/add', multer({
                             newUser
                                 .save()
                                 .then(() => {
-                                    return new Promise((resolve, reject) => {
-                                        const res = CategoriesHandler.FindAll(Category);
-                                        if (res) {
-                                            resolve(res);
-                                        } else {
-                                            reject('Error. Can`t find all categories.');
-                                        }
-                                    });
+                                    
+                                    CollectionsHandler.FindAllPromise(Category, ErrorMsg.CantFind('categories'))
+
                                 })
                                 .then((temp) => {
                                     res.render('success', {
@@ -157,11 +156,14 @@ router.post('/user/add', multer({
                         .catch(err => console.log(err));
                 }
                 catch (err) {
-                    CategoriesHandler.FindAll(Category)
+
+                    const {_message} = err.expected;
+
+                    CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {
                                 title: 'Result',
-                                msg: `${err.expected._message}.You can enter only Latin letters`,
+                                msg: `${_message}.You can enter only Latin letters`,
                                 items: temp
                             });
                         })
@@ -169,9 +171,13 @@ router.post('/user/add', multer({
                 }
             }
             else {
-                CategoriesHandler.FindAll(Category)
+                CollectionsHandler.FindAll(Category)
                     .then((temp) => {
-                        res.render('success', {title: 'Result', msg: 'User already exist.', items: temp});
+                        res.render('success', {
+                            title: 'Result',
+                            msg: 'User already exist.',
+                            items: temp
+                        });
                     })
                     .catch(err => console.log(err));
             }
@@ -188,7 +194,7 @@ router.post('/user/update', multer({
     User.findOne({username: req.body.updateUserName})
         .then((user) => {
             if (!user) {
-                CategoriesHandler.FindAll(Category)
+                CollectionsHandler.FindAll(Category)
                     .then((temp) => {
                         res.render('success',
                             {
@@ -201,14 +207,15 @@ router.post('/user/update', multer({
             }
             else {
                 try {
-                    const item = UserHandler.CheckUpdate(req);
 
-                    user.updateOne({"username": req.body.updateUserName}, {$set: item}, (err) => {
+                    const item = UserHandler.CheckUpdate(req);
+                    const {updateUserName} = req.body;
+
+                    user.updateOne({"username": updateUserName}, {$set: item}, (err) => {
                         assert.equal(null, err);
-                        console.log('item updated');
                     });
 
-                    CategoriesHandler.FindAll(Category)
+                    CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {
                                 title: 'Result',
@@ -219,7 +226,7 @@ router.post('/user/update', multer({
                         .catch(err => console.log(err));
                 }
                 catch (err) {
-                    CategoriesHandler.FindAll(Category)
+                    CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {
                                 title: 'Result',
@@ -245,7 +252,7 @@ router.post('/user/delete', function (req, res, next) {
         try {
             User.deleteOne({"username": req.body.removeUser}, function (err, result) {
                 assert.equal(null, err);
-                CategoriesHandler.FindAll(Category)
+                CollectionsHandler.FindAll(Category)
                     .then((temp) => {
                         res.render('success', {
                             title: 'Result',
@@ -257,7 +264,7 @@ router.post('/user/delete', function (req, res, next) {
             });
         }
         catch (err) {
-            CategoriesHandler.FindAll(Category)
+            CollectionsHandler.FindAll(Category)
                 .then((temp) => {
                     res.render('success', {
                         title: 'Result',
