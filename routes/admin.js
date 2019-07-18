@@ -140,7 +140,7 @@ router.post('/user/add', multer({
                             newUser
                                 .save()
                                 .then(() => {
-                                    
+
                                     CollectionsHandler.FindAllPromise(Category, ErrorMsg.CantFind('categories'))
 
                                 })
