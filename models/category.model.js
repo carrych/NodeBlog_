@@ -6,7 +6,6 @@ const CategorySchema = mongoose.Schema({
             type: String,
             unique: true,
             uppercase: true,
-            match: /^[a-zA-Z]+$/,
             required: true
         }
     }, {

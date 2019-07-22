@@ -93,6 +93,9 @@
                     </div>
 
                     <form action="/admin/category/add" method="post">
+
+                        {{> errorsMsgs }}
+
                         <div class="form-group">
                             <label>Create new category</label>
                             <input type="text" class="form-control" name="addCategory" placeholder="Enter new category">
@@ -132,6 +135,9 @@
                     </div>
 
                     <form action="/admin/user/add" method="post" enctype="multipart/form-data">
+
+                        {{> errorsMsgs }}
+
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" class="form-control" name="username" placeholder="Enter username">

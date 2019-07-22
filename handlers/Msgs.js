@@ -1,4 +1,4 @@
-class ErrorMsg {
+class Msgs {
 
     Success() {
     return 'Operation completed successfully.';
@@ -6,6 +6,14 @@ class ErrorMsg {
 
     Fail() {
         return 'Operation failed.';
+    }
+
+    Empty(field){
+        return `${field} can not be empty.`;
+    }
+
+    LatinLetters(){
+        return 'You can enter only Latin letters.';
     }
 
     CorectData(){
@@ -21,4 +29,4 @@ class ErrorMsg {
     }
 }
 
-module.exports = new ErrorMsg;
+module.exports = new Msgs;

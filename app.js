@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('./configs/mongo');
 const bodyParser = require('body-parser');
+var hbs = require('hbs');
+const expressValidator = require('express-validator');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -19,14 +21,26 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
+hbs.registerPartials(`${__dirname}/views/partials`);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//
+
+//set express-validator
+app.use(expressValidator({
+    errorFormatter: function (param, msg, value) {
+        return {
+            param: param,
+            msg: msg,
+            value: value
+        };
+    }
+}));
+
+//our routs to the pages
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/about', aboutRouter);

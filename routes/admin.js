@@ -8,7 +8,8 @@ const User = require('../models/user.model');
 const Category = require('../models/category.model');
 const {storageConfig, fileFilter} = require('../configs/multer.config');
 const UserHandler = require('../handlers/UserHandler');
-const ErrorMsg = require('../handlers/ErrorMsg');
+const Msgs = require('../handlers/Msgs');
+const expressValidator = require('express-validator');
 
 
 /* GET admin page. */
@@ -26,8 +27,20 @@ router.post('/category/add', function (req, res, next) {
 
     const {addCategory} = req.body;
 
-    if (!addCategory) {
-        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
+    req.checkBody('addCategory', Msgs.Empty('Category')).notEmpty();
+    req.checkBody('addCategory', Msgs.LatinLetters()).matches(/^[a-zA-Z]+$/, 'i');
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        CollectionsHandler.FindAll(Category)
+            .then((temp) => {
+                res.render('admin', {
+                    items: temp,
+                    errors: errors
+                });
+            })
+            .catch(err => console.log(err));
     }
     else {
         Category
@@ -35,47 +48,31 @@ router.post('/category/add', function (req, res, next) {
             .then((category) => {
                 // if it new category, we created it in database else send msg to user that such category exist
                 if (!category) {
-                    try {
-                        const newCategory = new Category({
-                            _id: mongoose.mongo.ObjectId(),
-                            category: addCategory
-                        });
+                    const newCategory = new Category({
+                        _id: mongoose.mongo.ObjectId(),
+                        category: addCategory
+                    });
 
-                        let error = newCategory.validateSync();
-                        assert.equal(null, error);
+                    newCategory
+                        .save()
+                        .then(() => {
 
-                        newCategory
-                            .save()
-                            .then(() => {
+                            CollectionsHandler.FindAllPromise(Category, Msgs.CantFind('categories'))
 
-                                CollectionsHandler.FindAllPromise(Category, ErrorMsg.CantFind('categories'))
-
-                            })
-                            .then((temp) => {
-                                res.render('success', {
-                                    title: 'Result',
-                                    msg: 'Successfully created.',
-                                    items: temp
-                                });
-                            })
-                            .catch(err => console.log(err));
-                    }
-                    catch (err) {
-                        CollectionsHandler.FindAll(Category)
-                            .then((temp) => {
-                                res.render('success', {
-                                    title: 'Result',
-                                    msg: `${err.expected._message}.You can enter only Latin letters`,
-                                    items: temp
-                                });
-                            })
-                            .catch(err => console.log(err));
-                    }
+                        })
+                        .then((temp) => {
+                            res.render('success', {
+                                title: 'Result',
+                                msg: Msgs.Success(),
+                                items: temp
+                            });
+                        })
+                        .catch(err => console.log(err));
                 }
                 else {
                     CollectionsHandler.FindAll(Category)
                         .then((temp) => {
-                            res.render('success', {title: 'Result', msg: 'Category already exist.', items: temp});
+                            res.render('success', {title: 'Result', msg: Msgs.AlreadyExist('Category'), items: temp});
                         })
                         .catch(err => console.log(err));
                 }
@@ -90,14 +87,26 @@ router.post('/category/delete', function (req, res, next) {
 
     const {removeCategory} = req.body;
 
-    if (!removeCategory) {
-        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
+    req.checkBody('removeCategory', Msgs.Empty('Category')).notEmpty();
+    req.checkBody('removeCategory', Msgs.LatinLetters()).matches(/^[a-zA-Z]+$/, 'i');
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        CollectionsHandler.FindAll(Category)
+            .then((temp) => {
+                res.render('admin', {
+                    items: temp,
+                    errors: errors
+                });
+            })
+            .catch(err => console.log(err));
     }
     else {
         try {
             Category.deleteOne({"category": removeCategory}, function (err, result) {
                 assert.equal(null, err);
-                res.render('success', {title: 'Result', msg: 'Successfully deleted.'})
+                res.render('success', {title: 'Result', msg: Msgs.Success()})
             });
         }
         catch (err) {
@@ -108,7 +117,7 @@ router.post('/category/delete', function (req, res, next) {
                 .then((temp) => {
                     res.render('success', {
                         title: 'Result',
-                        msg: `${_message}.Delete failed.`,
+                        msg: `${_message}.${Msgs.Fail()}.`,
                         items: temp
                     });
                 })
@@ -129,43 +138,47 @@ router.post('/user/add', multer({
         .then((user) => {
             // if it new category, we created it in database else send msg to user that such category exist
             if (!user) {
-                try {
 
+                req.checkBody('username', Msgs.Empty('Username')).notEmpty();
+                req.checkBody('username', 'Username must be between 4-15 characters long.').len(4, 15);
+                req.checkBody('email', 'The email you entered is invalid, please try again.').isEmail();
+                req.checkBody('email', 'Email address must be between 4-100 characters long, please try again.').len(4, 100);
+                req.checkBody('password', 'Password must be between 8-100 characters long.').len(8, 100);
+                req.checkBody('password', 'Password must include one lowercase character, one uppercase character, a number, and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, 'i');
+                req.checkBody('username', 'Username can only contain letters, numbers, or underscores.').matches(/^[A-Za-z0-9_-]+$/, 'i');
+                req.checkBody('role', 'Role can be only: "admin" or "user"').matches(/\buser\b|\badmin\b/, 'i');
+
+                const errors = req.validationErrors();
+
+                if (errors) {
+                    CollectionsHandler.FindAll(Category)
+                        .then((temp) => {
+                            res.render('admin', {
+                                items: temp,
+                                errors: errors
+                            });
+                        })
+                        .catch(err => console.log(err));
+                }
+                else {
                     UserHandler.CreateUser(req)
                         .then(newUser => {
-
-                            let error = newUser.validateSync();
-                            assert.equal(null, error);
 
                             newUser
                                 .save()
                                 .then(() => {
 
-                                    CollectionsHandler.FindAllPromise(Category, ErrorMsg.CantFind('categories'))
+                                    CollectionsHandler.FindAllPromise(Category, Msgs.CantFind('categories'))
 
                                 })
                                 .then((temp) => {
                                     res.render('success', {
                                         title: 'Result',
-                                        msg: 'Successfully created.',
+                                        msg: Msgs.Success(),
                                         items: temp
                                     });
                                 })
                                 .catch(err => console.log(err));
-                        })
-                        .catch(err => console.log(err));
-                }
-                catch (err) {
-
-                    const {_message} = err.expected;
-
-                    CollectionsHandler.FindAll(Category)
-                        .then((temp) => {
-                            res.render('success', {
-                                title: 'Result',
-                                msg: `${_message}.You can enter only Latin letters`,
-                                items: temp
-                            });
                         })
                         .catch(err => console.log(err));
                 }
@@ -175,7 +188,7 @@ router.post('/user/add', multer({
                     .then((temp) => {
                         res.render('success', {
                             title: 'Result',
-                            msg: 'User already exist.',
+                            msg: Msgs.AlreadyExist('User'),
                             items: temp
                         });
                     })
@@ -191,7 +204,9 @@ router.post('/user/update', multer({
     fileFilter: fileFilter
 }).single('newAvatar'), function (req, res, next) {
 
-    User.findOne({username: req.body.updateUserName})
+    const {updateUserName} = req.body;
+
+    User.findOne({username: updateUserName})
         .then((user) => {
             if (!user) {
                 CollectionsHandler.FindAll(Category)
@@ -199,7 +214,7 @@ router.post('/user/update', multer({
                         res.render('success',
                             {
                                 title: 'Result',
-                                msg: 'There is no such user.',
+                                msg: Msgs.CantFind('User'),
                                 items: temp
                             });
                     })
@@ -208,29 +223,57 @@ router.post('/user/update', multer({
             else {
                 try {
 
-                    const item = UserHandler.CheckUpdate(req);
-                    const {updateUserName} = req.body;
+                    req.checkBody('newUserName', Msgs.Empty('Username')).notEmpty();
+                    req.checkBody('newUserName', 'Username must be between 4-15 characters long.').len(4, 15);
+                    req.checkBody('newEmail', 'The email you entered is invalid, please try again.').isEmail();
+                    req.checkBody('newEmail', 'Email address must be between 4-100 characters long, please try again.').len(4, 100);
+                    req.checkBody('newPassword', 'Password must be between 8-100 characters long.').len(8, 100);
+                    req.checkBody('newPassword', 'Password must include one lowercase character, one uppercase character, a number, and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, 'i');
+                    req.checkBody('newUserName', 'Username can only contain letters, numbers, or underscores.').matches(/^[A-Za-z0-9_-]+$/, 'i');
+                    req.checkBody('newRole', 'Role can be only: "admin" or "user"').matches(/\buser\b|\badmin\b/, 'i');
 
-                    user.updateOne({"username": updateUserName}, {$set: item}, (err) => {
-                        assert.equal(null, err);
-                    });
+                    const errors = req.validationErrors();
 
-                    CollectionsHandler.FindAll(Category)
-                        .then((temp) => {
-                            res.render('success', {
-                                title: 'Result',
-                                msg: `Successful updated.`,
-                                items: temp
-                            });
-                        })
-                        .catch(err => console.log(err));
+                    if (errors) {
+                        CollectionsHandler.FindAll(Category)
+                            .then((temp) => {
+                                res.render('admin', {
+                                    items: temp,
+                                    errors: errors
+                                });
+                            })
+                            .catch(err => console.log(err));
+                    }
+                    else {
+                        const updatedUser = UserHandler.CheckUpdate(req);
+
+                        user.updateOne({'username': updateUserName}, {$set: updatedUser}, (err) => {
+                            //check formats of img/avatar(formats showed in file multer.config.js (other err's we checked with checkBody))
+
+                            assert.equal(null, err);
+
+                        });
+
+                        CollectionsHandler.FindAll(Category)
+                            .then((temp) => {
+                                res.render('success', {
+                                    title: 'Result',
+                                    msg: Msgs.Success(),
+                                    items: temp
+                                });
+                            })
+                            .catch(err => console.log(err));
+                    }
                 }
                 catch (err) {
+
+                    const {_message} = err.expected;
+
                     CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('success', {
                                 title: 'Result',
-                                msg: `${err.expected._message}. Update failed.`,
+                                msg: `${_message}. ${Msgs.Fail()}.`,
                                 items: temp
                             });
                         })
@@ -245,18 +288,33 @@ router.post('/user/update', multer({
 /* POST delete user. */
 router.post('/user/delete', function (req, res, next) {
 
-    if (!req.body.removeUser) {
-        res.render('success', {title: 'Result', msg: 'Please pass correct data.'});
+    const {removeUser} = req.body;
+
+    req.checkBody('removeUser', Msgs.Empty('Username')).notEmpty();
+    req.checkBody('removeUser', 'Username must be between 4-15 characters long.').len(4, 15);
+    req.checkBody('removeUser', 'Username can only contain letters, numbers, or underscores.').matches(/^[A-Za-z0-9_-]+$/, 'i');
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        CollectionsHandler.FindAll(Category)
+            .then((temp) => {
+                res.render('admin', {
+                    items: temp,
+                    errors: errors
+                });
+            })
+            .catch(err => console.log(err));
     }
     else {
         try {
-            User.deleteOne({"username": req.body.removeUser}, function (err, result) {
+            User.deleteOne({'username': removeUser}, function (err, result) {
                 assert.equal(null, err);
                 CollectionsHandler.FindAll(Category)
                     .then((temp) => {
                         res.render('success', {
                             title: 'Result',
-                            msg: `Successfully deleted`,
+                            msg: Msgs.Success(),
                             items: temp
                         });
                     })
@@ -268,7 +326,7 @@ router.post('/user/delete', function (req, res, next) {
                 .then((temp) => {
                     res.render('success', {
                         title: 'Result',
-                        msg: `${err.expected._message}.Operation failed.`,
+                        msg: `${err.expected._message}.${Msgs.Fail()}.`,
                         items: temp
                     });
                 })
@@ -276,4 +334,5 @@ router.post('/user/delete', function (req, res, next) {
         }
     }
 });
+
 module.exports = router;
