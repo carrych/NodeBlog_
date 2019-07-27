@@ -24,11 +24,6 @@ router.get('/', ensureAuthenticated, (req, res) => {
     }
 });
 
-/* GET user forms for admin. */
-// router.get('/add', ensureAuthenticated, (req, res) => {
-//     res.render('user');
-// });
-
 /* POST create new user.*/
 router.post('/add', multer({
     storage: storageConfig,
@@ -84,9 +79,8 @@ router.post('/add', multer({
                                                     res.redirect('/admin/user');
                                                 })
                                                 .catch(err => console.log(err));
-                                        }
-                                    )
-                                })
+                                        });
+                                });
                         })
                         .catch(err => console.log(err));
                 }
@@ -114,7 +108,6 @@ router.post('/user/update', multer({
 
                 res.flash('error_msg', Msgs.CantFind('User'));
                 res.redirect('/admin/user');
-
             }
             else {
                 try {
@@ -143,23 +136,40 @@ router.post('/user/update', multer({
                             .catch(err => console.log(err));
                     }
                     else {
+
                         const updatedUser = UserHandler.CheckUpdate(req);
 
-                        user.updateOne({'username': updateUserName}, {$set: updatedUser}, (err) => {
-                            //check formats of img/avatar(formats showed in file multer.config.js (other err's we checked with checkBody))
-                            assert.equal(null, err);
-                        });
+                        if (updatedUser.newPassword) {
+                            bcrypt.genSalt(10,
+                                (err, salt) => {
+                                    bcrypt.hash(updatedUser.password, salt, (err, hash) => {
+                                        if (err) throw err;
+                                        //set pass to hashed
+                                        updatedUser.password = hash;
+                                        //update user
+                                        user.updateOne({'username': updateUserName}, {$set: updatedUser}, (err) => {
+                                            //check formats of img/avatar(formats showed in file multer.config.js (other err's we checked with checkBody))
+                                            assert.equal(null, err);
+                                        });
+                                    });
+                                });
+                        }
+                        else {
+                            //update user
+                            user.updateOne({'username': updateUserName}, {$set: updatedUser}, (err) => {
+                                //check formats of img/avatar(formats showed in file multer.config.js (other err's we checked with checkBody))
+                                assert.equal(null, err);
+                            });
+                        }
 
                         res.flash('success_msg', Msgs.Fail());
                         res.redirect('/admin/user');
-
                     }
                 }
                 catch (err) {
 
                     res.flash('error_msg', Msgs.Fail());
                     res.redirect('/admin/user');
-
                 }
             }
         })
@@ -193,18 +203,17 @@ router.post('/user/delete', (req, res) => {
     else {
         try {
             User.deleteOne({'username': removeUser}, (err) => {
+
                 assert.equal(null, err);
 
                 res.flash('success_msg', Msgs.Success());
                 res.redirect('/admin/user');
-
             });
         }
         catch (err) {
 
             res.flash('error_msg', Msgs.Fail());
             res.redirect('/admin/user');
-
         }
     }
 });

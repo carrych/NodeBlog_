@@ -57,6 +57,7 @@ router.post('/category/add', (req, res) => {
                     newCategory
                         .save()
                         .then(() => {
+
                             req.flash('success_msg', Msgs.Success());
                             res.redirect('/admin/category');
                         })
@@ -66,7 +67,6 @@ router.post('/category/add', (req, res) => {
 
                     req.flash('error_msg', Msgs.AlreadyExist('Category'));
                     res.redirect('/admin/category');
-
                 }
             })
             .catch(err => console.log(err));
@@ -99,6 +99,7 @@ router.post('/category/delete', (req, res) => {
     else {
         try {
             Category.deleteOne({"category": removeCategory}, (err) => {
+                
                 assert.equal(null, err);
 
                 req.flash('success_msg', Msgs.Success());
