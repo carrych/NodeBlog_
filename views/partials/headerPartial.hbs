@@ -1,0 +1,82 @@
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+</div>
+
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+
+    <!-- Navbar Area -->
+    <div class="mag-main-menu" id="sticker">
+        <div class="classy-nav-container breakpoint-off">
+            <!-- Menu -->
+            <nav class="classy-navbar justify-content-between" id="magNav">
+
+                <!-- Nav brand -->
+                <a href="http://localhost:3000" class="nav-brand"><img src="/images/core-img/logo.png" alt=""></a>
+
+                <!-- Navbar Toggler -->
+                <div class="classy-navbar-toggler">
+                    <span class="navbarToggler"><span></span><span></span><span></span></span>
+                </div>
+
+                <!-- Nav Content -->
+                <div class="nav-content d-flex align-items-center">
+                    <div class="classy-menu">
+
+                        <!-- Close Button -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li class="active"><a href="http://localhost:3000">Home</a></li>
+                                {{#if isAdmin}}
+                                    <li><a href="http://localhost:3000/admin">Admin</a></li>
+                                {{/if}}
+
+                                <li><a href="http://localhost:3000/about">About Us</a></li>
+                                <li><a href="http://localhost:3000/contact">Contact</a>
+                            </ul>
+                        </div>
+                        <!-- Nav End -->
+                    </div>
+
+                    <div class="top-meta-data d-flex align-items-center">
+                        <!-- Top Search Area -->
+                        <div class="top-search-area">
+                            <form action="#" method="post">
+                                <input type="search" name="top-search" id="topSearch"
+                                       placeholder="Search and hit enter...">
+                                <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <!-- Cabinet -->
+                        {{#if role}}
+                            <a href="http://localhost:3000/cabinet" class="login-btn"><i class="fa fa-user"
+                                                                                         aria-hidden="true"></i></a>
+                        {{/if}}
+                        <!-- Login -->
+                        {{#if role}}
+                            <a href="/login/logout" class="submit-video"><span><i
+                                    class="fa fa-cloud-upload"></i></span>
+                                <span class="video-text">Logout {{name}}</span> </a>
+                        {{else}}
+                            <a href="/login" class="submit-video"><span><i
+                                    class="fa fa-cloud-upload"></i></span>
+                                <span class="video-text">Login</span> </a>
+                        {{/if}}
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- ##### Header Area End ##### -->

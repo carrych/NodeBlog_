@@ -1,0 +1,53 @@
+<!-- ##### errors with msgs from render ##### -->
+
+{{#if errors}}
+    {{# each errors }}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ this.msg}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {{/each}}
+{{/if}}
+
+<!-- ##### end ##### -->
+
+<!-- ##### flash success msgs ##### -->
+
+{{#if success_msg}}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ success_msg}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/if}}
+
+<!-- ##### end ##### -->
+
+<!-- ##### flash error msgs ##### -->
+
+{{#if error_msg}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ error_msg}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/if}}
+
+<!-- ##### end ##### -->
+
+<!-- ##### Login: passport errors ##### -->
+
+{{#if error}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ error}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{{/if}}
+
+<!-- ##### end ##### -->

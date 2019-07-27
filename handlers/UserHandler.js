@@ -11,12 +11,13 @@ class UserHandler {
 
         let newUser = new User({
             _id: mongoose.mongo.ObjectId(),
-            username: username,
-            email: email,
-            password: password,
-            role: role
+            username,
+            email,
+            password,
+            role
         });
 
+        console.log(newUser.password);
         if (avatar)
             newUser.mainimage = avatar;
 

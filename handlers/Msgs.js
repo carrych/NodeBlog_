@@ -16,8 +16,8 @@ class Msgs {
         return 'You can enter only Latin letters.';
     }
 
-    CorectData(){
-        return 'Please pass correct data.';
+    IncorrectData(whatIncorrect){
+        return `${whatIncorrect} incorrect`;
     }
 
     AlreadyExist(whatAlreadyExist){
@@ -26,6 +26,22 @@ class Msgs {
 
     CantFind(whatCantFind){
         return `Error. Can't find ${whatCantFind}.`;
+    }
+
+    NotRegistred(whatNotRegistred){
+        return `That ${whatNotRegistred} is not registered.`;
+    }
+
+    Log(inOrOut){
+        return `You are logged ${inOrOut}`;
+    }
+
+    Login(){
+        return `You just a guest. Please login`;
+    }
+
+    Admin(){
+        return `You are not admin.`;
     }
 }
 

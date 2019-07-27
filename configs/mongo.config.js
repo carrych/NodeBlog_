@@ -8,7 +8,7 @@ var dbOptions = {
     useNewUrlParser: true
 };
 
-mongoose.connect(dbURI, dbOptions, function (err) {
+mongoose.connect(dbURI, dbOptions, (err) => {
     assert.equal(null, err);
 });
 

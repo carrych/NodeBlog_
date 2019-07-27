@@ -2,13 +2,13 @@
 /* :: 1.0 Import Fonts */
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700");
 /* :: 2.0 Import All CSS */
-@import url(../css/bootstrap.min.css);
-@import url(../css/classy-nav.css);
 @import url(../css/font-awesome.min.css);
 @import url(../css/themify-icons.css);
 @import url(../css/owl.carousel.min.css);
 @import url(../css/animate.css);
 @import url(../css/magnific-popup.css);
+@import url(../css/bootstrap.min.css);
+@import url(../css/classy-nav.css); 
 /* :: 3.0 Base CSS */
 * {
   margin: 0;
@@ -216,6 +216,10 @@ img {
     -ms-transform: scale(1);
     transform: scale(1); } }
 
+/* :: display none */
+.dspl-none {
+  display: none; }
+
 /* :: 3.5.0 Miscellaneous */
 .section-heading {
   position: relative;
@@ -310,8 +314,8 @@ input:focus {
       width: 30px;
       height: 30px; } }
 
-/* :: 3.7.0 mag Button */
-.mag-btn {
+/* :: 3.7.0 mag,back and btn-100 buttons */
+.mag-btn, .mag-btn-100, .back-btn {
   background-color: #ed3974;
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
@@ -328,11 +332,25 @@ input:focus {
   line-height: 50px;
   font-weight: 500;
   text-transform: capitalize; }
-  .mag-btn:hover, .mag-btn:focus {
+  .mag-btn:hover, .mag-btn:focus, .mag-btn-100:hover, .mag-btn-100:focus, .back-btn:hover, .back-btn:focus {
     font-size: 16px;
     font-weight: 500;
     background-color: #000000;
     color: #ffffff; }
+
+.mag-btn-100 {
+  width: 100%; }
+
+.back-btn {
+  font-size: 20px;
+  min-width: 80px;
+  height: 40px;
+  line-height: 40px;
+  position: absolute;
+  top: -48px;
+  left: -125px; }
+  .back-btn:hover, .back-btn:focus {
+    font-size: 20px; }
 
 /* :: 4.0 Response msg */
 .msg {
@@ -547,6 +565,13 @@ input:focus {
 .breakpoint-on .classynav {
   padding-top: 70px;
   padding-bottom: 70px; }
+
+/* :: 5.0 Admin Menu Nav */
+.admin-menu-widget-nav ul li a {
+  font-size: 16px;
+  text-transform: uppercase; }
+  .admin-menu-widget-nav ul li a:hover {
+    color: #ed3974; }
 
 /* :: 5.0 Hero Area CSS */
 .hero-blog-post {
@@ -2193,7 +2218,7 @@ blockquote {
       .single-contact-info h6 {
         font-size: 14px; } }
 
-.form-control, .form-control-file {
+.form-control, .form-control-file, .form-control-file-green {
   position: relative;
   z-index: 2;
   height: 48px;
@@ -2207,14 +2232,17 @@ blockquote {
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
   transition-duration: 500ms; }
-  .form-control:focus, .form-control-file:focus {
+  .form-control:focus, .form-control-file:focus, .form-control-file-green:focus {
     box-shadow: none;
     border-color: #ed3974; }
 
-.form-control-file {
+.form-control-file, .form-control-file-green {
   background-color: #fff111;
   border: none;
   padding: 0; }
+
+.form-control-file-green {
+  background-color: #00BD39; }
 
 select.form-control {
   -webkit-appearance: none;

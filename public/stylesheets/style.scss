@@ -2,22 +2,17 @@
 @import 'mixin';
 @import 'responsive';
 @import 'theme_color';
-
 /* Master Stylesheet */
-
 /* :: 1.0 Import Fonts */
-
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700');
-
 /* :: 2.0 Import All CSS */
-
-@import '../css/bootstrap.min.css';
-@import '../css/classy-nav.css';
 @import '../css/font-awesome.min.css';
 @import '../css/themify-icons.css';
 @import '../css/owl.carousel.min.css';
 @import '../css/animate.css';
 @import '../css/magnific-popup.css';
+@import '../css/bootstrap.min.css';
+@import '../css/classy-nav.css';
 
 /* :: 3.0 Base CSS */
 
@@ -269,6 +264,11 @@ img {
   }
 }
 
+/* :: display none */
+.dspl-none {
+  display: none;
+}
+
 /* :: 3.5.0 Miscellaneous */
 
 .section-heading {
@@ -380,9 +380,9 @@ input:focus {
   }
 }
 
-/* :: 3.7.0 mag Button */
+/* :: 3.7.0 mag,back and btn-100 buttons */
 
-.mag-btn {
+.mag-btn, .mag-btn-100, .back-btn {
   background-color: $hover-color;
   @include trans-duration(500ms);
   position: relative;
@@ -403,6 +403,24 @@ input:focus {
     font-weight: 500;
     background-color: $dark-color;
     color: $white-color;
+  }
+}
+
+.mag-btn-100 {
+  width: 100%;
+}
+
+.back-btn {
+  font-size: 20px;
+  min-width: 80px;
+  height: 40px;
+  line-height: 40px;
+  position: absolute;
+  top: -48px;
+  left: -125px;
+  &:hover,
+  &:focus {
+    font-size: 20px;
   }
 }
 
@@ -649,6 +667,15 @@ input:focus {
 .breakpoint-on .classynav {
   padding-top: 70px;
   padding-bottom: 70px;
+}
+
+/* :: 5.0 Admin Menu Nav */
+.admin-menu-widget-nav ul li a {
+  font-size: 16px;
+  text-transform: uppercase;
+  &:hover {
+    color: $hover-color;
+  }
 }
 
 /* :: 5.0 Hero Area CSS */
@@ -2387,7 +2414,7 @@ blockquote {
   position: relative;
   z-index: 1;
   iframe {
-    border: none!important;
+    border: none !important;
     width: 100% !important;
     height: 540px !important;
     @media #{$breakpoint-md} {
@@ -2506,7 +2533,7 @@ blockquote {
   }
 }
 
-.form-control,.form-control-file {
+.form-control, .form-control-file, .form-control-file-green {
   position: relative;
   z-index: 2;
   height: 48px;
@@ -2524,10 +2551,14 @@ blockquote {
   }
 }
 
-.form-control-file {
+.form-control-file, .form-control-file-green {
   background-color: $yellow-color;
   border: none;
   padding: 0;
+}
+
+.form-control-file-green {
+  background-color: $green-color;
 }
 
 select.form-control {

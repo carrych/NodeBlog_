@@ -1,0 +1,86 @@
+{{> headerPartial }}
+
+<!-- ##### Breadcrumb Area Start ##### -->
+<section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(/images/bg-img/40.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2>Admin</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Breadcrumb Area End ##### -->
+
+<!-- ##### Breadcrumb Area Start ##### -->
+<div class="mag-breadcrumb p-15">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Admin</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcrumb Area End ##### -->
+
+<!-- ##### Admin Area Start ##### -->
+<div class="mag-login-area py-5">
+    <div class="container">
+        <div class="row justify-content-center categories">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white p-30 box-shadow mb-15">
+
+                    <a href="http://localhost:3000/admin" class="btn back-btn mt-5"><< Back </a>
+                    <!-- Section Title -->
+                    <div class="section-heading">
+                        <h5>Create category</h5>
+                    </div>
+
+                    <form action="/admin/category/add" method="post">
+
+                        {{> Msgs }}
+
+                        <div class="form-group">
+                            <label>Create new category</label>
+                            <input type="text" class="form-control" name="addCategory" placeholder="Enter new category">
+                        </div>
+                        <button type="submit" class="btn mag-btn mt-30 mb-30">Create</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center categories">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white p-30 box-shadow mb-15">
+                    <!-- Section Title -->
+                    <div class="section-heading">
+                        <h5>Delete category</h5>
+                    </div>
+
+                    <form action="/admin/category/delete" method="post">
+                        <div class="form-group">
+                            <label>Delete category</label>
+                            <input type="text" class="form-control" name="removeCategory"
+                                   placeholder="Enter category for remove">
+                        </div>
+                        <button type="submit" class="btn mag-btn mt-30">Delete</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Admin Area End ##### -->
+
+{{> footerPartial }}
