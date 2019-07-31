@@ -1,4 +1,3 @@
-
 {{> headerPartial }}
 
 <!-- ##### Hero Area Start ##### -->
@@ -14,7 +13,8 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Oleg Lyashko zaviv bloH</a>
+                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Oleg
+                            Lyashko zaviv bloH</a>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,8 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Blog from Oleg Lyashko</a>
+                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Blog
+                            from Oleg Lyashko</a>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,8 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Blog from Oleg Lyashko</a>
+                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">Blog
+                            from Oleg Lyashko</a>
                     </div>
                 </div>
             </div>
@@ -250,13 +252,58 @@
                 <h5>NEW POST</h5>
             </div>
 
+            {{#if role}}
+
+                {{> Msgs }}
+
+                <form action="/add-new-post" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Titel</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter titel of post">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category">
+                            {{# each items }}
+                                <option value={{ this._id }}>{{ this.category }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Image for post</label>
+                        <input type="file" class="form-control-file" name="mainimage">
+                    </div>
+                    <div class="form-group">
+                        <label>Post content</label>
+                        <textarea name="postContent" id="postMainContent">
+                        </textarea>
+                        <script>
+                            ClassicEditor.create(document.querySelector('#postMainContent')).then(() => {
+                                console.log("CKEditor in the project");
+                            }).catch(error => {
+                                console.error(error);
+                            });
+                        </script>
+                    </div>
+
+                    <button type="submit" class="btn mag-btn-center mt-30">Create Post</button>
+
+                </form>
+            {{else}}
+
+                {{> Msgs }}
+
+                <a href="/login" class="mag-btn-center text-center">Login</a>
+            {{/if}}
+
         </div>
 
         <!-- Feature Video Posts Area -->
         <div class="feature-video-posts mb-30">
             <!-- Section Title -->
             <div class="section-heading">
-                <h5>Featured Videos</h5>
+                <h5>Posts</h5>
             </div>
 
             <div class="featured-video-posts">
@@ -275,8 +322,11 @@
                                     <a href="#">MAY 8, 2018</a>
                                     <a href="archive.html">lifestyle</a>
                                 </div>
-                                <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                                <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From
+                                    Lowe’s</a>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                    mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit
+                                    voluptatem accusantium doloremque laudantium</p>
                             </div>
                             <!-- Post Share Area -->
                             <div class="post-share-area d-flex align-items-center justify-content-between">
@@ -291,9 +341,11 @@
                                     <a href="#" class="sharebtn"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
                                     <!-- All Share Buttons -->
                                     <div class="all-share-btn d-flex">
-                                        <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                        <a href="#" class="facebook"><i class="fa fa-facebook"
+                                                                        aria-hidden="true"></i></a>
                                         <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                        <a href="#" class="google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                        <a href="#" class="google-plus"><i class="fa fa-google-plus"
+                                                                           aria-hidden="true"></i></a>
                                         <a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
@@ -312,7 +364,8 @@
                                         <img src="/images/bg-img/23.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">Global Resorts Network Grn Putting Timeshares To Shame</a>
+                                        <a href="single-post.html" class="post-title">Global Resorts Network Grn Putting
+                                            Timeshares To Shame</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -327,7 +380,8 @@
                                         <img src="/images/bg-img/24.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">A Guide To Rocky Mountain Vacations</a>
+                                        <a href="single-post.html" class="post-title">A Guide To Rocky Mountain
+                                            Vacations</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -342,7 +396,8 @@
                                         <img src="/images/bg-img/25.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">American Standards And European Culture How To Avoid</a>
+                                        <a href="single-post.html" class="post-title">American Standards And European
+                                            Culture How To Avoid</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -372,7 +427,8 @@
                                         <img src="/images/bg-img/27.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                                        <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams
+                                            Amsterdam Is Alive</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -389,7 +445,8 @@
                                         <img src="/images/bg-img/23.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">Global Resorts Network Grn Putting Timeshares To Shame</a>
+                                        <a href="single-post.html" class="post-title">Global Resorts Network Grn Putting
+                                            Timeshares To Shame</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -404,7 +461,8 @@
                                         <img src="/images/bg-img/24.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">A Guide To Rocky Mountain Vacations</a>
+                                        <a href="single-post.html" class="post-title">A Guide To Rocky Mountain
+                                            Vacations</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -419,7 +477,8 @@
                                         <img src="/images/bg-img/25.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">American Standards And European Culture How To Avoid</a>
+                                        <a href="single-post.html" class="post-title">American Standards And European
+                                            Culture How To Avoid</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -449,7 +508,8 @@
                                         <img src="/images/bg-img/27.jpg" alt="">
                                     </div>
                                     <div class="post-content">
-                                        <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                                        <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams
+                                            Amsterdam Is Alive</a>
                                         <div class="post-meta d-flex">
                                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -499,7 +559,8 @@
                         <span class="video-duration">09:27</span>
                     </div>
                     <div class="post-content">
-                        <a href="single-post.html" class="post-title">Dentists Are Smiling Over Painless Veneer Alternative</a>
+                        <a href="single-post.html" class="post-title">Dentists Are Smiling Over Painless Veneer
+                            Alternative</a>
                         <div class="post-meta d-flex">
                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -550,7 +611,8 @@
                         <span class="video-duration">09:27</span>
                     </div>
                     <div class="post-content">
-                        <a href="single-post.html" class="post-title">Dentists Are Smiling Over Painless Veneer Alternative</a>
+                        <a href="single-post.html" class="post-title">Dentists Are Smiling Over Painless Veneer
+                            Alternative</a>
                         <div class="post-meta d-flex">
                             <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                             <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -600,8 +662,11 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From
+                            Lowe’s</a>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                            anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                            accusantium doloremque laudantium</p>
                     </div>
                     <!-- Post Share Area -->
                     <div class="post-share-area d-flex align-items-center justify-content-between">
@@ -638,8 +703,11 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From
+                            Lowe’s</a>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                            anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                            accusantium doloremque laudantium</p>
                     </div>
                     <!-- Post Share Area -->
                     <div class="post-share-area d-flex align-items-center justify-content-between">
@@ -676,8 +744,11 @@
                             <a href="#">MAY 8, 2018</a>
                             <a href="archive.html">lifestyle</a>
                         </div>
-                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From Lowe’s</a>
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                        <a href="video-post.html" class="post-title">A Closer Look At Our Front Porch Items From
+                            Lowe’s</a>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                            anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                            accusantium doloremque laudantium</p>
                     </div>
                     <!-- Post Share Area -->
                     <div class="post-share-area d-flex align-items-center justify-content-between">
@@ -710,7 +781,8 @@
                             <img src="/images/bg-img/31.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is
+                                Alive</a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -727,7 +799,8 @@
                             <img src="/images/bg-img/32.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is
+                                Alive</a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -744,7 +817,8 @@
                             <img src="/images/bg-img/33.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is
+                                Alive</a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -761,7 +835,8 @@
                             <img src="/images/bg-img/34.jpg" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is Alive</a>
+                            <a href="single-post.html" class="post-title">From Wetlands To Canals And Dams Amsterdam Is
+                                Alive</a>
                             <div class="post-meta d-flex">
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
                                 <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
@@ -803,13 +878,20 @@
 
             <!-- Catagory Widget -->
             <ul class="catagory-widgets">
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span>35</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span>30</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span>13</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span>06</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span>28</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span>08</span></a></li>
-                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span>13</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span>
+                    <span>35</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span>
+                    <span>30</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span>
+                    <span>13</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span>
+                    <span>06</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span>
+                    <span>28</span></a></li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span>08</span></a>
+                </li>
+                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span>13</span></a>
+                </li>
             </ul>
         </div>
 
@@ -832,7 +914,8 @@
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">TV Show</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        Subscribe</a>
                 </div>
             </div>
 
@@ -843,7 +926,8 @@
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">Game Channel</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        Subscribe</a>
                 </div>
             </div>
 
@@ -854,7 +938,8 @@
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">Sport Channel</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        Subscribe</a>
                 </div>
             </div>
 
@@ -865,7 +950,8 @@
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">Travel Channel</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        Subscribe</a>
                 </div>
             </div>
 
@@ -876,7 +962,8 @@
                 </div>
                 <div class="youtube-channel-content">
                     <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
-                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        Subscribe</a>
                 </div>
             </div>
 
@@ -902,128 +989,4 @@
 </section>
 <!-- ##### Mag Posts Area End ##### -->
 
-<!-- ##### Footer Area Start ##### -->
-<footer class="footer-area">
-    <div class="container">
-        <div class="row">
-            <!-- Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="footer-widget">
-                    <!-- Logo -->
-                    <a href="index.html" class="foo-logo"><img src="/images/core-img/logo2.png" alt=""></a>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="footer-social-info">
-                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
-                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="footer-widget">
-                    <h6 class="widget-title">Categories</h6>
-                    <nav class="footer-widget-nav">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Tech</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Music</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Fashion</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-
-            <!-- Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="footer-widget">
-                    <h6 class="widget-title">Sport Videos</h6>
-                    <!-- Single Blog Post -->
-                    <div class="single-blog-post style-2 d-flex">
-                        <div class="post-thumbnail">
-                            <img src="/images/bg-img/12.jpg" alt="">
-                        </div>
-                        <div class="post-content">
-                            <a href="single-post.html" class="post-title">Take A Romantic Break In A Boutique Hotel</a>
-                            <div class="post-meta d-flex justify-content-between">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Blog Post -->
-                    <div class="single-blog-post style-2 d-flex">
-                        <div class="post-thumbnail">
-                            <img src="/images/bg-img/13.jpg" alt="">
-                        </div>
-                        <div class="post-content">
-                            <a href="single-post.html" class="post-title">Travel Prudently Luggage And Carry On</a>
-                            <div class="post-meta d-flex justify-content-between">
-                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 34</a>
-                                <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 84</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 14</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="footer-widget">
-                    <h6 class="widget-title">Channels</h6>
-                    <ul class="footer-tags">
-                        <li><a href="#">Travel</a></li>
-                        <li><a href="#">Fashionista</a></li>
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">DESIGN</a></li>
-                        <li><a href="#">NEWS</a></li>
-                        <li><a href="#">TRENDING</a></li>
-                        <li><a href="#">VIDEO</a></li>
-                        <li><a href="#">Game</a></li>
-                        <li><a href="#">Sports</a></li>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Foods</a></li>
-                        <li><a href="#">TV Show</a></li>
-                        <li><a href="#">Twitter Video</a></li>
-                        <li><a href="#">Playing</a></li>
-                        <li><a href="#">clips</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Copywrite Area -->
-    <div class="copywrite-area">
-        <div class="container">
-            <div class="row">
-                <!-- Copywrite Text -->
-                <div class="col-12 col-sm-6">
-                    <p class="copywrite-text"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <nav class="footer-nav">
-                        <ul>
-                            <li><a href="http://localhost:3000">Home</a></li>
-                            <li><a href="http://localhost:3000/contact">Contact Us</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- ##### Footer Area End ##### -->
+{{> footerPartial }}

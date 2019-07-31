@@ -8,7 +8,7 @@
 @import url(../css/animate.css);
 @import url(../css/magnific-popup.css);
 @import url(../css/bootstrap.min.css);
-@import url(../css/classy-nav.css); 
+@import url(../css/classy-nav.css);
 /* :: 3.0 Base CSS */
 * {
   margin: 0;
@@ -144,6 +144,10 @@ img {
 
 .height-800 {
   height: 800px !important; }
+
+/* :: 3.2.1 Height */
+.line-height-30 {
+  line-height: 30px; }
 
 /* :: 3.3.0 Section Padding */
 .section-padding-100 {
@@ -315,7 +319,7 @@ input:focus {
       height: 30px; } }
 
 /* :: 3.7.0 mag,back and btn-100 buttons */
-.mag-btn, .mag-btn-100, .back-btn {
+.mag-btn, .mag-btn-center, .mag-btn-100, .back-btn {
   background-color: #ed3974;
   -webkit-transition-duration: 500ms;
   -o-transition-duration: 500ms;
@@ -332,11 +336,16 @@ input:focus {
   line-height: 50px;
   font-weight: 500;
   text-transform: capitalize; }
-  .mag-btn:hover, .mag-btn:focus, .mag-btn-100:hover, .mag-btn-100:focus, .back-btn:hover, .back-btn:focus {
+  .mag-btn:hover, .mag-btn:focus, .mag-btn-center:hover, .mag-btn-center:focus, .mag-btn-100:hover, .mag-btn-100:focus, .back-btn:hover, .back-btn:focus {
     font-size: 16px;
     font-weight: 500;
     background-color: #000000;
     color: #ffffff; }
+
+.mag-btn-center {
+  display: block;
+  width: 20%;
+  margin: 10px auto; }
 
 .mag-btn-100 {
   width: 100%; }

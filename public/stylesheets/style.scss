@@ -186,6 +186,12 @@ img {
   height: 800px !important;
 }
 
+/* :: 3.2.1 Height */
+
+.line-height-30 {
+  line-height: 30px;
+}
+
 /* :: 3.3.0 Section Padding */
 
 .section-padding-100 {
@@ -382,7 +388,7 @@ input:focus {
 
 /* :: 3.7.0 mag,back and btn-100 buttons */
 
-.mag-btn, .mag-btn-100, .back-btn {
+.mag-btn, .mag-btn-center, .mag-btn-100, .back-btn {
   background-color: $hover-color;
   @include trans-duration(500ms);
   position: relative;
@@ -404,6 +410,12 @@ input:focus {
     background-color: $dark-color;
     color: $white-color;
   }
+}
+
+.mag-btn-center {
+  display: block;
+  width: 20%;
+  margin: 10px auto;
 }
 
 .mag-btn-100 {

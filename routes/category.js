@@ -14,15 +14,14 @@ router.get('/', ensureAuthenticated, (req, res) => {
         if (role === 'admin')
             res.render('category', {isAdmin: true, role: true, name: name});
         else {
-            res.flash('error_msg', Msgs.Admin());
-            res.render('login');
+            res.render('login', {error_msg: Msgs.Admin()});
         }
     }
 
 });
 
 /* POST create new category*/
-router.post('/category/add', (req, res) => {
+router.post('/add', (req, res) => {
 
     const {addCategory} = req.body;
 
@@ -75,7 +74,7 @@ router.post('/category/add', (req, res) => {
 
 
 /* POST delete category. */
-router.post('/category/delete', (req, res) => {
+router.post('/delete', (req, res) => {
 
     const {removeCategory} = req.body;
 
@@ -99,7 +98,7 @@ router.post('/category/delete', (req, res) => {
     else {
         try {
             Category.deleteOne({"category": removeCategory}, (err) => {
-                
+
                 assert.equal(null, err);
 
                 req.flash('success_msg', Msgs.Success());

@@ -12,6 +12,7 @@ class CollectionsHandler {
 
             })
             .then(tempArr => tempArr);
+        console.log(`category info ${temp}`);
         return temp;
     }
 

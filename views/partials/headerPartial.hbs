@@ -16,7 +16,7 @@
             <nav class="classy-navbar justify-content-between" id="magNav">
 
                 <!-- Nav brand -->
-                <a href="http://localhost:3000" class="nav-brand"><img src="/images/core-img/logo.png" alt=""></a>
+                <a href="/" class="nav-brand"><img src="/images/core-img/logo.png" alt=""></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
@@ -35,13 +35,13 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li class="active"><a href="http://localhost:3000">Home</a></li>
+                                <li class="active"><a href="/">Home</a></li>
                                 {{#if isAdmin}}
-                                    <li><a href="http://localhost:3000/admin">Admin</a></li>
+                                    <li><a href="/admin">Admin</a></li>
                                 {{/if}}
 
-                                <li><a href="http://localhost:3000/about">About Us</a></li>
-                                <li><a href="http://localhost:3000/contact">Contact</a>
+                                <li><a href="/about">About Us</a></li>
+                                <li><a href="/contact">Contact</a>
                             </ul>
                         </div>
                         <!-- Nav End -->
@@ -59,14 +59,14 @@
                         </div>
                         <!-- Cabinet -->
                         {{#if role}}
-                            <a href="http://localhost:3000/cabinet" class="login-btn"><i class="fa fa-user"
+                            <a href="/cabinet" class="login-btn"><i class="fa fa-user"
                                                                                          aria-hidden="true"></i></a>
                         {{/if}}
                         <!-- Login -->
                         {{#if role}}
                             <a href="/login/logout" class="submit-video"><span><i
                                     class="fa fa-cloud-upload"></i></span>
-                                <span class="video-text">Logout {{name}}</span> </a>
+                                <span class="video-text line-height-30">Logout {{name}}</span> </a>
                         {{else}}
                             <a href="/login" class="submit-video"><span><i
                                     class="fa fa-cloud-upload"></i></span>

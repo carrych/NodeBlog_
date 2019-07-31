@@ -18,8 +18,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
         if (role === 'admin')
             res.render('user', {isAdmin: true, role: true, name: name});
         else {
-            res.flash('error_msg', Msgs.Admin());
-            res.render('login');
+            res.render('login',{error_msg: Msgs.Admin()});
         }
     }
 });
@@ -95,7 +94,7 @@ router.post('/add', multer({
 });
 
 /* POST update user.*/
-router.post('/user/update', multer({
+router.post('/update', multer({
     storage: storageConfig,
     fileFilter: fileFilter
 }).single('newAvatar'), (req, res) => {
@@ -178,7 +177,7 @@ router.post('/user/update', multer({
 
 
 /* POST delete user. */
-router.post('/user/delete', (req, res) => {
+router.post('/delete', (req, res) => {
 
     const {removeUser} = req.body;
 
