@@ -4,7 +4,7 @@ const MulterConfig ={
 //Set name for img`s and path for save
     storageConfig : multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, "uploads/avatars");
+            cb(null, "public/uploads/imgs");
         },
         filename: (req, file, cb) => {
             cb(null, `${file.originalname}-${Date.now()}`);

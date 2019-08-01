@@ -1,5 +1,5 @@
 (() => {
-// some functionality for btns and items of  admin menu
+// change bg color when we get file
     function adminMenu() {
         let inputWithFile = document.querySelectorAll('.form-control-file');
 

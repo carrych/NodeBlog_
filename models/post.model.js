@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
         },
         mainimage:{
             type: String,
-            default: '/images/default/defaultPost.jpg',
+            default: '/uploads/imgs/defaultPost.jpg',
             required: false
         },
         date:{

@@ -4,16 +4,7 @@ const assert = require('assert');
 class CollectionsHandler {
 
     async FindAll(collection) {
-        let temp = await collection
-            .find({}, function (err, data) {
-                let tempArr = [];
-                assert.equal(null, err);
-                data.forEach(category => tempArr.push(category));
-
-            })
-            .then(tempArr => tempArr);
-        console.log(`category info ${temp}`);
-        return temp;
+        return await collection.find();
     }
 
     FindAllPromise(collection, errMsg) {

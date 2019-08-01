@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         },
         mainimage: {
             type: String,
-            default: '/images/default/defaultAvatar.png',
+            default: '/upload/imgs/defaultAvatar.png',
             required: false
         },
         created: {

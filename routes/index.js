@@ -42,7 +42,7 @@ router.post('/add-new-post', multer({
             if (!post) {
 
                 req.checkBody('title', Msgs.Empty('Title')).notEmpty();
-                req.checkBody('title', 'Title must be between 10-60 characters long.').len(10, 60);
+                req.checkBody('title', 'Title must be between 10-60 characters long.').len(5, 60);
                 req.checkBody('title', 'Title can contain letters, numbers and punctuation marks.').matches(/^[A-Za-z0-9.!\s(),:;?-]+$/, 'i');
                 req.checkBody('postContent', Msgs.Empty('Post content')).notEmpty();
 
@@ -64,17 +64,26 @@ router.post('/add-new-post', multer({
                 else {
                     PostHandler.CreatePost(req)
                         .then(newPost => {
-                            newPost.save()
-                                .then(() => {
-                                    req.flash('success_msg', Msgs.Success());
-                                    res.redirect('/');
-                                })
-                                .catch(err => console.log(err));
+                            newPost.save();
                         })
                         .catch(err => console.log(err));
+                    req.flash('success_msg', Msgs.Success());
+                    res.redirect('/');
                 }
             }
         })
         .catch(err => console.log(err));
 });
+
+/* GET all posts. */
+
+router.get('/posts',async (req, res) => {
+
+    const posts = await PostHandler.AllPostsWithFullInfo(Post);
+
+    if (!posts) res.status(404).json({error: Msgs.Fail()});
+
+    res.status(200).json({posts});
+});
+
 module.exports = router;

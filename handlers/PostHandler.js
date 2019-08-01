@@ -1,5 +1,7 @@
 const Post = require('../models/post.model');
 const mongoose = require('mongoose');
+const assert = require('assert');
+
 
 class PostHandler {
 
@@ -26,11 +28,41 @@ class PostHandler {
 
     //populate data for post
 
-    async PopulateAuthorAndCategory(newPost) {
+    async PopulateAuthor(newPost) {
 
-        return Post.findOne({title: newPost.title}).populate('author');
+        return Post.findOne({_id: newPost._id}).populate('author');
     }
 
+    async PopulateCategory(newPost) {
+
+        return Post.findOne({_id: newPost._id}).populate('category');
+    }
+
+    async AllPostsWithFullInfo(colectionPosts) {
+
+        const allPosts = await colectionPosts.find();
+
+        const newAllPosts = await Promise.all(allPosts.map(async post => {
+                const {_id, title, postContent, mainimage, date} = post;
+                const {author} = await this.PopulateAuthor(post);
+                const {category} = await this.PopulateCategory(post);
+
+                const fullPostData = {
+                    _id,
+                    title,
+                    postContent,
+                    mainimage,
+                    date,
+                    author,
+                    category
+                };
+
+                return fullPostData;
+            }
+        ));
+
+        return newAllPosts;
+    }
 }
 
 module.exports = new PostHandler;
