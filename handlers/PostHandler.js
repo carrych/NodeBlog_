@@ -20,8 +20,8 @@ class PostHandler {
             author: _id
         });
 
-        if (mainimage)
-            newPost.mainimage = mainimage;
+        if (in_request.file)
+            newPost.mainimage = in_request.file.filename;
 
         return newPost;
     }

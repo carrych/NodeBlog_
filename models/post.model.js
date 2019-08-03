@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcrypt-nodejs');
 
 const UserSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
@@ -10,7 +9,7 @@ const UserSchema = new mongoose.Schema({
         },
         postContent:{
             type: String,
-            maxLength: 10000,
+            maxLength: 30000,
             required: true,
             unique: true
         },
@@ -26,7 +25,7 @@ const UserSchema = new mongoose.Schema({
         },
         mainimage:{
             type: String,
-            default: '/uploads/imgs/defaultPost.jpg',
+            default: 'defaultPost.jpg',
             required: false
         },
         date:{

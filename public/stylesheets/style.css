@@ -145,9 +145,19 @@ img {
 .height-800 {
   height: 800px !important; }
 
-/* :: 3.2.1 Height */
+/* :: 3.2.1 Line-Height */
 .line-height-30 {
   line-height: 30px; }
+
+/* :: 3.2.2 Hide Overflow */
+.content-hide {
+  overflow: hidden;
+  text-align: justify; }
+
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
 
 /* :: 3.3.0 Section Padding */
 .section-padding-100 {
@@ -603,58 +613,60 @@ input:focus {
   @media only screen and (min-width: 576px) and (max-width: 767px) {
     .hero-blog-post {
       height: 400px; } }
-  .hero-blog-post .post-content .post-meta {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 20px; }
-    .hero-blog-post .post-content .post-meta a {
+  .hero-blog-post .post-content {
+    max-height: 200px; }
+    .hero-blog-post .post-content .post-meta {
       position: relative;
       z-index: 1;
+      margin-bottom: 20px; }
+      .hero-blog-post .post-content .post-meta a {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ed3974; }
+        .hero-blog-post .post-content .post-meta a:last-child {
+          margin-left: 20px; }
+          .hero-blog-post .post-content .post-meta a:last-child::after {
+            content: '/';
+            position: absolute;
+            top: 0;
+            left: -15px;
+            z-index: 1; }
+        .hero-blog-post .post-content .post-meta a:hover, .hero-blog-post .post-content .post-meta a:focus {
+          color: #ffffff; }
+    .hero-blog-post .post-content .post-title {
+      font-size: 45px;
+      color: #ffffff;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 20px; }
+      @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        .hero-blog-post .post-content .post-title {
+          font-size: 36px; } }
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .hero-blog-post .post-content .post-title {
+          font-size: 30px; } }
+      @media only screen and (max-width: 767px) {
+        .hero-blog-post .post-content .post-title {
+          font-size: 20px; } }
+      .hero-blog-post .post-content .post-title:hover, .hero-blog-post .post-content .post-title:focus {
+        color: #ed3974; }
+    .hero-blog-post .post-content .video-play {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(26, 26, 26, 0.5);
+      border-radius: 50%;
       display: inline-block;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #ed3974; }
-      .hero-blog-post .post-content .post-meta a:last-child {
-        margin-left: 20px; }
-        .hero-blog-post .post-content .post-meta a:last-child::after {
-          content: '/';
-          position: absolute;
-          top: 0;
-          left: -15px;
-          z-index: 1; }
-      .hero-blog-post .post-content .post-meta a:hover, .hero-blog-post .post-content .post-meta a:focus {
-        color: #ffffff; }
-  .hero-blog-post .post-content .post-title {
-    font-size: 45px;
-    color: #ffffff;
-    font-weight: 400;
-    display: block;
-    margin-bottom: 20px; }
-    @media only screen and (min-width: 992px) and (max-width: 1199px) {
-      .hero-blog-post .post-content .post-title {
-        font-size: 36px; } }
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .hero-blog-post .post-content .post-title {
-        font-size: 30px; } }
-    @media only screen and (max-width: 767px) {
-      .hero-blog-post .post-content .post-title {
-        font-size: 20px; } }
-    .hero-blog-post .post-content .post-title:hover, .hero-blog-post .post-content .post-title:focus {
-      color: #ed3974; }
-  .hero-blog-post .post-content .video-play {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(26, 26, 26, 0.5);
-    border-radius: 50%;
-    display: inline-block;
-    color: #ffffff;
-    font-size: 18px;
-    text-align: center;
-    line-height: 60px; }
-    .hero-blog-post .post-content .video-play:hover, .hero-blog-post .post-content .video-play:focus {
-      background-color: #ed3974; }
+      color: #ffffff;
+      font-size: 18px;
+      text-align: center;
+      line-height: 60px; }
+      .hero-blog-post .post-content .video-play:hover, .hero-blog-post .post-content .video-play:focus {
+        background-color: #ed3974; }
 
 .hero-area {
   position: relative;

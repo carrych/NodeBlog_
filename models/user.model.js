@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcrypt-nodejs');
 
 const UserSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
@@ -22,7 +21,7 @@ const UserSchema = new mongoose.Schema({
         },
         mainimage: {
             type: String,
-            default: '/upload/imgs/defaultAvatar.png',
+            default: 'defaultAvatar.png',
             required: false
         },
         created: {

@@ -18,7 +18,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
         if (role === 'admin')
             res.render('user', {isAdmin: true, role: true, name: name});
         else {
-            res.render('login',{error_msg: Msgs.Admin()});
+            res.render('login', {error_msg: Msgs.Admin()});
         }
     }
 });
@@ -30,6 +30,7 @@ router.post('/add', multer({
 }).single('avatar'), (req, res) => {
 
     const {username} = req.body;
+    const {name} = req.user;
 
     User.findOne({username: username})
         .then((user) => {
@@ -51,11 +52,13 @@ router.post('/add', multer({
                     CollectionsHandler.FindAll(Category)
                         .then((temp) => {
                             res.render('user', {
+                                name: name,
                                 items: temp,
                                 errors: errors,
                                 isAdmin: true,
                                 role: true
-                            });
+                            })
+                            ;
                         })
                         .catch(err => console.log(err));
                 }
@@ -67,18 +70,18 @@ router.post('/add', multer({
                             bcrypt.genSalt(10,
                                 (err, salt) => {
                                     bcrypt.hash(newUser.password, salt, (err, hash) => {
-                                            if (err) throw err;
-                                            //set pass to hashed
-                                            newUser.password = hash;
-                                            console.log(newUser);
-                                            newUser
-                                                .save()
-                                                .then(() => {
-                                                    req.flash('success_msg', Msgs.Success());
-                                                    res.redirect('/admin/user');
-                                                })
-                                                .catch(err => console.log(err));
-                                        });
+                                        if (err) throw err;
+                                        //set pass to hashed
+                                        newUser.password = hash;
+                                        console.log(newUser);
+                                        newUser
+                                            .save()
+                                            .then(() => {
+                                                req.flash('success_msg', Msgs.Success());
+                                                res.redirect('/admin/user');
+                                            })
+                                            .catch(err => console.log(err));
+                                    });
                                 });
                         })
                         .catch(err => console.log(err));
@@ -100,6 +103,7 @@ router.post('/update', multer({
 }).single('newAvatar'), (req, res) => {
 
     const {updateUserName} = req.body;
+    const {name} = req.user;
 
     User.findOne({username: updateUserName})
         .then((user) => {
@@ -126,6 +130,7 @@ router.post('/update', multer({
                         CollectionsHandler.FindAll(Category)
                             .then((temp) => {
                                 res.render('user', {
+                                    name: name,
                                     items: temp,
                                     errors: errors,
                                     isAdmin: true,
@@ -180,6 +185,7 @@ router.post('/update', multer({
 router.post('/delete', (req, res) => {
 
     const {removeUser} = req.body;
+    const {name} = req.user;
 
     req.checkBody('removeUser', Msgs.Empty('Username')).notEmpty();
     req.checkBody('removeUser', 'Username must be between 4-15 characters long.').len(4, 15);
@@ -191,6 +197,7 @@ router.post('/delete', (req, res) => {
         CollectionsHandler.FindAll(Category)
             .then((temp) => {
                 res.render('user', {
+                    name: name,
                     errors: errors,
                     isAdmin: true,
                     role: true,

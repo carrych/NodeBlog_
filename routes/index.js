@@ -42,7 +42,7 @@ router.post('/add-new-post', multer({
             if (!post) {
 
                 req.checkBody('title', Msgs.Empty('Title')).notEmpty();
-                req.checkBody('title', 'Title must be between 10-60 characters long.').len(5, 60);
+                req.checkBody('title', 'Title must be between 5-60 characters long.').len(5, 60);
                 req.checkBody('title', 'Title can contain letters, numbers and punctuation marks.').matches(/^[A-Za-z0-9.!\s(),:;?-]+$/, 'i');
                 req.checkBody('postContent', Msgs.Empty('Post content')).notEmpty();
 

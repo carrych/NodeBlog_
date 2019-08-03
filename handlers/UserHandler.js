@@ -7,7 +7,7 @@ class UserHandler {
 
     async CreateUser(in_request) {
 
-        const {username, password, email, role, avatar} = in_request.body;
+        const {username, password, email, role} = in_request.body;
 
         let newUser = new User({
             _id: mongoose.mongo.ObjectId(),
@@ -17,9 +17,8 @@ class UserHandler {
             role
         });
 
-        console.log(newUser.password);
-        if (avatar)
-            newUser.mainimage = avatar;
+        if (in_request.file)
+            newUser.mainimage = in_request.file.filename;
 
         return newUser;
     }

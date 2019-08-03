@@ -186,10 +186,21 @@ img {
   height: 800px !important;
 }
 
-/* :: 3.2.1 Height */
+/* :: 3.2.1 Line-Height */
 
 .line-height-30 {
   line-height: 30px;
+}
+
+/* :: 3.2.2 Hide Overflow */
+.content-hide{
+  overflow: hidden;
+  text-align: justify;
+}
+.text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* :: 3.3.0 Section Padding */
@@ -713,6 +724,7 @@ input:focus {
     height: 400px;
   }
   .post-content {
+    max-height: 200px;
     .post-meta {
       position: relative;
       z-index: 1;

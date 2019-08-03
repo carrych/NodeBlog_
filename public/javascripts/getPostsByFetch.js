@@ -39,13 +39,13 @@
                             <!-- Thumbnail -->
                             <div class="post-thumbnail mb-50">
                                  <a href="/single-post/${_id}">
-                                 <img src="${mainimage}" alt="post_main_img">
+                                 <img src="/uploads/imgs/${mainimage}" alt="post_main_img">
                                  </a>
                             </div>
                             <!-- Post Contetnt -->
-                            <div class="post-content">
+                            <div class="post-content content-hide">
                                 <div class="d-flex flex-row justify-content-between">
-                                <a href="/single-post/${_id}" class="post-title">${title}</a>
+                                <a href="/single-post/${_id}" class="post-title text-overflow">${title}</a>
                                 <div class="post-meta">
                                     <a href="#">${date} </a>
                                     <a href="#">${categoryName}</a>
