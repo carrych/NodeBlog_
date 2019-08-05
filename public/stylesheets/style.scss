@@ -165,6 +165,18 @@ img {
 }
 
 /* :: 3.2.0 Height */
+.height-200 {
+  height: 200px !important;
+}
+
+.height-250 {
+  height: 250px !important;
+}
+
+
+.height-300 {
+  height: 300px !important;
+}
 
 .height-400 {
   height: 400px !important;
@@ -724,7 +736,6 @@ input:focus {
     height: 400px;
   }
   .post-content {
-    max-height: 200px;
     .post-meta {
       position: relative;
       z-index: 1;

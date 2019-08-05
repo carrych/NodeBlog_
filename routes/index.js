@@ -86,4 +86,13 @@ router.get('/posts',async (req, res) => {
     res.status(200).json({posts});
 });
 
+router.get('/categories',async (req, res) => {
+
+    const categories = await CollectionsHandler.FindAll(Category);
+
+    if (!categories) res.status(404).json({error: Msgs.Fail()});
+
+    res.status(200).json({categories});
+});
+
 module.exports = router;

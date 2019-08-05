@@ -1,8 +1,36 @@
-(() => {
-    const createPostBtn = document.querySelector('.create-post');
+class Fetch{
 
-// take posts from db
-    async function showPosts() {
+    // get all categories from DB by fetch ant put into the HTML code of page
+    async showCategories() {
+
+        const res = await fetch(`/categories`);
+
+        if (res.status !== 200) return;
+
+        const data = await res.json();
+        console.log(data);
+        const {categories} = data;
+        console.log(categories);
+        const parentElement = document.querySelector('.catagory-widgets');
+        categories.map((category) => {
+
+            const {
+                category: categoryName
+            } = category;
+
+            const liWithCategory = document.createElement('li');
+
+            const singleCategory = `
+                          <a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> ${categoryName}</span>
+            <span>35</span></a>
+`;
+            liWithCategory.innerHTML = singleCategory;
+            parentElement.appendChild(liWithCategory);
+        });
+    }
+
+    // get all posts from DB by fetch ant put into the HTML code of page
+    async showPosts() {
         const parentElement = document.querySelector('.mainDiv');
         const res = await fetch(`/posts`);
 
@@ -43,7 +71,7 @@
                                  </a>
                             </div>
                             <!-- Post Contetnt -->
-                            <div class="post-content content-hide">
+                            <div class="post-content content-hide height-250">
                                 <div class="d-flex flex-row justify-content-between">
                                 <a href="/single-post/${_id}" class="post-title text-overflow">${title}</a>
                                 <div class="post-meta">
@@ -83,17 +111,4 @@
             parentElement.appendChild(divWithPost);
         });
     }
-
-    window.addEventListener('load', async () => {
-        await showPosts();
-    });
-
-    if (createPostBtn) {
-        createPostBtn.addEventListener('click', async () => {
-            await showPosts();
-        });
-    }
-})();
-
-
-
+}
