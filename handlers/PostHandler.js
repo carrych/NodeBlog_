@@ -63,6 +63,33 @@ class PostHandler {
 
         return newAllPosts;
     }
+
+    async PostWithFullInfo(id) {
+
+        const post = await Post.findById(id);
+
+        const newPost = await (async ()=> {
+                const {_id, title, postContent, mainimage, date} = post;
+                const {author} = await this.PopulateAuthor(post);
+                const {category} = await this.PopulateCategory(post);
+
+                const fullPost = {
+                    _id,
+                    title,
+                    postContent,
+                    mainimage,
+                    date,
+                    author,
+                    category
+                };
+
+                console.log(fullPost);
+                return fullPost;
+            }
+        )();
+
+        return newPost;
+    }
 }
 
 module.exports = new PostHandler;

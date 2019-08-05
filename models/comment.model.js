@@ -15,11 +15,6 @@ const CommentSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    rating:{
-        type: Number,
-        default: 0,
-        required: true
-    },
     commentDate:{
         type: Date,
         default: Date.now,

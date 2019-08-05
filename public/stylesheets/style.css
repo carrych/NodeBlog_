@@ -735,6 +735,10 @@ input:focus {
   border-color: #ed3974; }
 
 /* :: 6.0 Post Area CSS */
+.content {
+  height: auto;
+  max-height: 250px; }
+
 .mag-posts-area {
   position: relative;
   z-index: 1;

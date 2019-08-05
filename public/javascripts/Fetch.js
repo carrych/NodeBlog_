@@ -51,7 +51,6 @@ class Fetch{
                 , title,
                 author: {
                     username: authorName,
-                    mainimage: authorAvatar
                 },
                 postContent
             } = post;
@@ -71,7 +70,7 @@ class Fetch{
                                  </a>
                             </div>
                             <!-- Post Contetnt -->
-                            <div class="post-content content-hide height-250">
+                            <div class="post-content content-hide content">
                                 <div class="d-flex flex-row justify-content-between">
                                 <a href="/single-post/${_id}" class="post-title text-overflow">${title}</a>
                                 <div class="post-meta">
