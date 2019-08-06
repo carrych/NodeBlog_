@@ -1,6 +1,5 @@
 let express = require('express');
 let router = express.Router();
-const CollectionsHandler = require('../handlers/CollectionsHandler');
 const Category = require('../models/category.model');
 const Msgs = require('../handlers/Msgs');
 const {ensureAuthenticated} = require('../configs/auth.config');
@@ -11,7 +10,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
     if (req.user) {
         const {role, name} = req.user;
         if (role === 'admin')
-            CollectionsHandler.FindAll(Category)
+            Category.find()
                 .then((temp) => {
                     res.render('admin', {items: temp, isAdmin: true, role: true, name: name});
                 })

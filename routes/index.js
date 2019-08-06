@@ -3,7 +3,6 @@ const router = express.Router();
 const Msgs = require('../handlers/Msgs');
 const multer = require('multer');
 const {storageConfig, fileFilter} = require('../configs/multer.config');
-const CollectionsHandler = require('../handlers/CollectionsHandler');
 const Category = require('../models/category.model');
 const Post = require('../models/post.model');
 const PostHandler = require('../handlers/PostHandler');
@@ -11,7 +10,7 @@ const PostHandler = require('../handlers/PostHandler');
 
 /* GET start page. */
 router.get('/', (req, res) => {
-    CollectionsHandler.FindAll(Category)
+    Category.find()
         .then((temp) => {
             if (req.user) {
                 const {role, username} = req.user;
@@ -49,11 +48,11 @@ router.post('/add-new-post', multer({
                 const errors = req.validationErrors();
 
                 if (errors) {
-                    CollectionsHandler.FindAll(Category)
+                    Category.find()
                         .then((temp) => {
                             res.render('index', {
                                 items: temp,
-                                errors: errors,
+                                errors,
                                 isAdmin: true,
                                 role: true,
                                 name: username
@@ -76,19 +75,19 @@ router.post('/add-new-post', multer({
 });
 
 /* GET all posts. */
+router.get('/posts', async (req, res) => {
 
-router.get('/posts',async (req, res) => {
-
-    const posts = await PostHandler.AllPostsWithFullInfo(Post);
+    const posts = await PostHandler.AllPostsWithFullInfo();
 
     if (!posts) res.status(404).json({error: Msgs.Fail()});
 
     res.status(200).json({posts});
 });
 
-router.get('/categories',async (req, res) => {
+/* GET all categories. */
+router.get('/categories', async (req, res) => {
 
-    const categories = await CollectionsHandler.FindAll(Category);
+    const categories = await Category.find();
 
     if (!categories) res.status(404).json({error: Msgs.Fail()});
 

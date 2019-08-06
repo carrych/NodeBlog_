@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const assert = require('assert');
-const CollectionsHandler = require('../handlers/CollectionsHandler');
 const Category = require('../models/category.model');
 const Msgs = require('../handlers/Msgs');
 const {ensureAuthenticated} = require('../configs/auth.config');
@@ -31,7 +30,7 @@ router.post('/add', (req, res) => {
     const errors = req.validationErrors();
 
     if (errors) {
-        CollectionsHandler.FindAll(Category)
+        Category.find()
             .then((temp) => {
                 res.render('category', {
                     items: temp,
@@ -84,7 +83,7 @@ router.post('/delete', (req, res) => {
     const errors = req.validationErrors();
 
     if (errors) {
-        CollectionsHandler.FindAll(Category)
+        Category.find()
             .then((temp) => {
                 res.render('category', {
                     items: temp,

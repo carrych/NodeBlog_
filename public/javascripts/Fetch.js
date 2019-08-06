@@ -1,4 +1,4 @@
-class Fetch{
+class Fetch {
 
     // get all categories from DB by fetch ant put into the HTML code of page
     async showCategories() {
@@ -29,7 +29,7 @@ class Fetch{
         });
     }
 
-    // get all posts from DB by fetch ant put into the HTML code of page
+    // get all posts from DB by fetch and put into the HTML code of page
     async showPosts() {
         const parentElement = document.querySelector('.mainDiv');
         const res = await fetch(`/posts`);
@@ -109,5 +109,88 @@ class Fetch{
             parentElement.appendChild(divCol);
             parentElement.appendChild(divWithPost);
         });
+    }
+
+    // get all comments from DB by fetch for some single post and show comments in single-post.hbs
+    async showComments() {
+
+        const postTitle = document.querySelector('.post-title');
+        const postId = postTitle.getAttribute('id');
+
+        const parentElement = document.querySelector('.parent_element_for_comments');
+        const res = await fetch(`/single-post/comments/${postId}`);
+
+        if (res.status !== 200) return;
+
+        const data = await res.json();
+        console.log(data);
+        const {comments} = data;
+        console.log(comments);
+
+        comments.map((oneComment) => {
+
+                let singleComment;
+                const date = moment(oneComment.commentDate).format('MMMM Do, YYYY');
+                const {
+                    guestName,
+                    comment,
+                } = oneComment;
+
+                const liWithComment = document.createElement('li');
+
+                liWithComment.classList.add('single_comment_area');
+
+                if (!guestName) {
+                    const {
+                        author: {
+                            username: authorName,
+                            mainimage: authorAvatar
+                        }
+                    } = oneComment;
+
+                    singleComment = `
+                            <div class="comment-content d-flex">
+                                <!-- Comment Author -->
+                                <div class="comment-author">
+                                    <img src="/uploads/imgs/${authorAvatar}" alt="author">
+                                </div>
+                                <!-- Comment Meta -->
+                                <div class="comment-meta">
+                                    <a href="#" class="comment-date">${date}</a>
+                                    <h6>${authorName}</h6>
+                                    ${comment}
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="like">like</a>
+                                        <a href="#" class="reply">unlike</a>
+                                    </div>
+                                </div>
+                            </div>
+`;
+                }
+                else {
+                    singleComment = `
+                            <div class="comment-content d-flex">
+                                <!-- Comment Author -->
+                                <div class="comment-author">
+                                    <img src="/uploads/imgs/defaultAvatar.png" alt="author">
+                                </div>
+                                <!-- Comment Meta -->
+                                <div class="comment-meta">
+                                    <a href="#" class="comment-date">${date}</a>
+                                    <h6>${guestName}</h6>
+                                    ${comment}
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="like">like</a>
+                                        <a href="#" class="reply">unlike</a>
+                                    </div>
+                                </div>
+                            </div>
+`;
+                }
+
+                liWithComment.innerHTML = singleComment;
+                parentElement.appendChild(liWithComment);
+            }
+        );
     }
 }

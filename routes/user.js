@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const multer = require('multer');
 const assert = require('assert');
-const CollectionsHandler = require('../handlers/CollectionsHandler');
 const User = require('../models/user.model');
 const Category = require('../models/category.model');
 const {storageConfig, fileFilter} = require('../configs/multer.config');
@@ -32,7 +31,7 @@ router.post('/add', multer({
     const {username} = req.body;
     const {name} = req.user;
 
-    User.findOne({username: username})
+    User.findOne({username})
         .then((user) => {
             // if it new category, we created it in database else send msg to user that such category exist
             if (!user) {
@@ -49,7 +48,7 @@ router.post('/add', multer({
                 const errors = req.validationErrors();
 
                 if (errors) {
-                    CollectionsHandler.FindAll(Category)
+                    Category.find()
                         .then((temp) => {
                             res.render('user', {
                                 name: name,
@@ -127,7 +126,7 @@ router.post('/update', multer({
                     const errors = req.validationErrors();
 
                     if (errors) {
-                        CollectionsHandler.FindAll(Category)
+                            Category.find()
                             .then((temp) => {
                                 res.render('user', {
                                     name: name,
@@ -194,7 +193,7 @@ router.post('/delete', (req, res) => {
     const errors = req.validationErrors();
 
     if (errors) {
-        CollectionsHandler.FindAll(Category)
+        Category.find()
             .then((temp) => {
                 res.render('user', {
                     name: name,

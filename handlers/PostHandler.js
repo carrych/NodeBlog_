@@ -1,7 +1,5 @@
 const Post = require('../models/post.model');
 const mongoose = require('mongoose');
-const assert = require('assert');
-
 
 class PostHandler {
 
@@ -38,9 +36,9 @@ class PostHandler {
         return Post.findOne({_id: newPost._id}).populate('category');
     }
 
-    async AllPostsWithFullInfo(colectionPosts) {
+    async AllPostsWithFullInfo() {
 
-        const allPosts = await colectionPosts.find();
+        const allPosts = await Post.find();
 
         const newAllPosts = await Promise.all(allPosts.map(async post => {
                 const {_id, title, postContent, mainimage, date} = post;
