@@ -13,9 +13,9 @@ const {ensureAuthenticated} = require('../configs/auth.config');
 /* GET user forms for admin. */
 router.get('/', ensureAuthenticated, (req, res) => {
     if (req.user) {
-        const {role, name} = req.user;
+        const {role, username:name} = req.user;
         if (role === 'admin')
-            res.render('user', {isAdmin: true, role: true, name: name});
+            res.render('user', {isAdmin: true, role: true, name});
         else {
             res.render('login', {error_msg: Msgs.Admin()});
         }
@@ -29,7 +29,7 @@ router.post('/add', multer({
 }).single('avatar'), (req, res) => {
 
     const {username} = req.body;
-    const {name} = req.user;
+    const {username: name} = req.user;
 
     User.findOne({username})
         .then((user) => {
@@ -49,11 +49,11 @@ router.post('/add', multer({
 
                 if (errors) {
                     Category.find()
-                        .then((temp) => {
+                        .then((items) => {
                             res.render('user', {
-                                name: name,
-                                items: temp,
-                                errors: errors,
+                                name,
+                                items,
+                                errors,
                                 isAdmin: true,
                                 role: true
                             })
@@ -72,7 +72,6 @@ router.post('/add', multer({
                                         if (err) throw err;
                                         //set pass to hashed
                                         newUser.password = hash;
-                                        console.log(newUser);
                                         newUser
                                             .save()
                                             .then(() => {
@@ -102,13 +101,13 @@ router.post('/update', multer({
 }).single('newAvatar'), (req, res) => {
 
     const {updateUserName} = req.body;
-    const {name} = req.user;
+    const {username: name} = req.user;
 
     User.findOne({username: updateUserName})
         .then((user) => {
             if (!user) {
 
-                res.flash('error_msg', Msgs.CantFind('User'));
+                req.flash('error_msg', Msgs.CantFind('User'));
                 res.redirect('/admin/user');
             }
             else {
@@ -126,12 +125,12 @@ router.post('/update', multer({
                     const errors = req.validationErrors();
 
                     if (errors) {
-                            Category.find()
-                            .then((temp) => {
+                        Category.find()
+                            .then((items) => {
                                 res.render('user', {
-                                    name: name,
-                                    items: temp,
-                                    errors: errors,
+                                    name,
+                                    items,
+                                    errors,
                                     isAdmin: true,
                                     role: true
                                 })
@@ -165,13 +164,13 @@ router.post('/update', multer({
                             });
                         }
 
-                        res.flash('success_msg', Msgs.Fail());
+                        req.flash('success_msg', Msgs.Success());
                         res.redirect('/admin/user');
                     }
                 }
                 catch (err) {
 
-                    res.flash('error_msg', Msgs.Fail());
+                    req.flash('error_msg', Msgs.Fail());
                     res.redirect('/admin/user');
                 }
             }
@@ -184,7 +183,7 @@ router.post('/update', multer({
 router.post('/delete', (req, res) => {
 
     const {removeUser} = req.body;
-    const {name} = req.user;
+    const {username:name} = req.user;
 
     req.checkBody('removeUser', Msgs.Empty('Username')).notEmpty();
     req.checkBody('removeUser', 'Username must be between 4-15 characters long.').len(4, 15);
@@ -194,13 +193,13 @@ router.post('/delete', (req, res) => {
 
     if (errors) {
         Category.find()
-            .then((temp) => {
+            .then((items) => {
                 res.render('user', {
-                    name: name,
-                    errors: errors,
+                    name,
+                    errors,
                     isAdmin: true,
                     role: true,
-                    items: temp
+                    items
                 });
             })
             .catch(err => console.log(err));
@@ -211,13 +210,13 @@ router.post('/delete', (req, res) => {
 
                 assert.equal(null, err);
 
-                res.flash('success_msg', Msgs.Success());
+                req.flash('success_msg', Msgs.Success());
                 res.redirect('/admin/user');
             });
         }
         catch (err) {
 
-            res.flash('error_msg', Msgs.Fail());
+            req.flash('error_msg', Msgs.Fail());
             res.redirect('/admin/user');
         }
     }

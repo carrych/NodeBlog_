@@ -2050,6 +2050,16 @@ blockquote {
     .about-us-content ul li i {
       margin-right: 5px; }
 
+.aboutUser .sectionImg {
+  height: 320px;
+  width: 240px; }
+
+.aboutUser .sectionInfo .text, .aboutUser .sectionInfo .userPosts {
+  margin-bottom: 5px; }
+
+.aboutUser .sectionInfo a:hover, .aboutUser .sectionInfo a:focus {
+  color: #ed3974; }
+
 .single-team-member {
   position: relative;
   z-index: 1;

@@ -173,7 +173,6 @@ img {
   height: 250px !important;
 }
 
-
 .height-300 {
   height: 300px !important;
 }
@@ -205,10 +204,11 @@ img {
 }
 
 /* :: 3.2.2 Hide Overflow */
-.content-hide{
+.content-hide {
   overflow: hidden;
   text-align: justify;
 }
+
 .text-overflow {
   overflow: hidden;
   white-space: nowrap;
@@ -872,7 +872,7 @@ input:focus {
 }
 
 /* :: 6.0 Post Area CSS */
-.content{
+.content {
   height: auto;
   max-height: 250px;
 }
@@ -2342,6 +2342,23 @@ blockquote {
       margin-bottom: 10px;
       i {
         margin-right: 5px;
+      }
+    }
+  }
+}
+
+.aboutUser {
+  .sectionImg {
+    height: 320px;
+    width: 240px;
+  }
+  .sectionInfo {
+    .text,.userPosts{
+      margin-bottom: 5px;
+    }
+    a {
+      &:hover, &:focus {
+        color: $hover-color;
       }
     }
   }

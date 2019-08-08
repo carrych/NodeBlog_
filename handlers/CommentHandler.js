@@ -5,7 +5,6 @@ class CommentHandler {
 
     async CreateComment(in_request) {
 
-        console.log("CREATE COMMENT");
         const {id: postId} = in_request.params;
         const {comment, guestName} = in_request.body;
 
@@ -22,7 +21,6 @@ class CommentHandler {
             author
         });
 
-        console.log("COMMENT:" + newComment);
         return newComment;
     }
 
@@ -59,15 +57,11 @@ class CommentHandler {
                         author,
                         commentDate
                     };
-
-                    for (let item in fullComment) {
-                        console.log(`${item} - ${fullComment[item]} `)
-                    }
                 }
                 return fullComment;
             }
         ));
-        
+
         return newAllComments;
     }
 }

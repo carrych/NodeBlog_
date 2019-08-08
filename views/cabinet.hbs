@@ -1,0 +1,82 @@
+{{> headerPartial }}
+
+<!-- ##### Breadcrumb Area Start ##### -->
+<section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(/images/bg-img/40.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2>Cabinet</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Breadcrumb Area End ##### -->
+
+<!-- ##### Breadcrumb Area Start ##### -->
+<div class="mag-breadcrumb p-15">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Cabinet</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Breadcrumb Area End ##### -->
+
+<!-- ##### Admin Area Start ##### -->
+<div class="mag-login-area py-5">
+    <div class="container">
+
+        <div class="row justify-content-around">
+            <div class="col-12 col-lg-12">
+                <div class="bg-white p-30 box-shadow mb-15">
+                    <div class="section-heading">
+                        <h5>CABINET</h5>
+                    </div>
+
+                    <div class="aboutUser d-flex justify-content-around flex-row">
+                        <div class="sectionImg">
+                            <img src="/uploads/imgs/{{avatar}}" alt="Avatar">
+                        </div>
+                        <div class="sectionInfo d-flex flex-column justify-content-start">
+
+                            <!-- Section Title -->
+
+                            <p class="text"><strong>Username: </strong>{{name}}</p>
+                            <p class="text"><strong>Email: </strong>{{email}}</p>
+                            <p class="text"><strong>Role: </strong>{{role}}</p>
+                            <p class="text"><strong>Created: </strong>{{created}}</p>
+                            {{#if posts}}
+                                <p class="text"><strong>Posts: </strong></p>
+                                <ul class="userPosts">
+                                    {{# each posts }}
+                                        <li><a href="/single-post/{{this._id}}"><i class="fa fa-angle-double-right"
+                                                                                   aria-hidden="true"></i> {{ this.title }}
+                                        </a></li>
+                                    {{/each}}
+                                </ul>
+
+                            {{else}}
+                                <p class="text"><strong>Posts: </strong> none</p>
+                            {{/if}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ##### Admin Area End ##### -->
+
+{{> footerPartial }}

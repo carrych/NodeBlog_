@@ -11,15 +11,15 @@ const PostHandler = require('../handlers/PostHandler');
 /* GET start page. */
 router.get('/', (req, res) => {
     Category.find()
-        .then((temp) => {
+        .then((items) => {
             if (req.user) {
-                const {role, username} = req.user;
+                const {role, username:name} = req.user;
                 if (role === 'admin')
-                    res.render('index', {isAdmin: true, role: true, name: username, items: temp});
-                else res.render('index', {isAdmin: false, role: true, name: username, items: temp});
+                    res.render('index', {isAdmin: true, role: true, name, items});
+                else res.render('index', {isAdmin: false, role: true, name, items});
             }
             else {
-                res.render('index', {warning_msg: Msgs.Login(), items: temp});
+                res.render('index', {warning_msg: Msgs.Login(), items});
             }
         })
         .catch(err => console.log(err));

@@ -8,9 +8,9 @@ class Fetch {
         if (res.status !== 200) return;
 
         const data = await res.json();
-        console.log(data);
+
         const {categories} = data;
-        console.log(categories);
+
         const parentElement = document.querySelector('.catagory-widgets');
         categories.map((category) => {
 
@@ -123,9 +123,7 @@ class Fetch {
         if (res.status !== 200) return;
 
         const data = await res.json();
-        console.log(data);
         const {comments} = data;
-        console.log(comments);
 
         comments.map((oneComment) => {
 

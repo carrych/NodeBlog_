@@ -21,6 +21,7 @@ const loginRouter = require('./routes/login');
 const successRouter = require('./routes/success');
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
+const cabinetRouter = require('./routes/cabinet');
 
 const app = express();
 
@@ -87,6 +88,7 @@ app.use('/success', successRouter);
 app.use('/login', loginRouter);
 app.use('/admin/user', userRouter);
 app.use('/admin/category', categoryRouter);
+app.use('/cabinet', cabinetRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
