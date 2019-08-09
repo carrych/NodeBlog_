@@ -59,6 +59,7 @@ class PostHandler {
             }
         ));
 
+        newAllPosts.reverse();
         return newAllPosts;
     }
 

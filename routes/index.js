@@ -11,15 +11,27 @@ const PostHandler = require('../handlers/PostHandler');
 /* GET start page. */
 router.get('/', (req, res) => {
     Category.find()
-        .then((items) => {
+        .then(async (items) => {
+
+            const posts = await PostHandler.AllPostsWithFullInfo();
+            const maxNumberForOwlCarousel = 3;
+            const threePosts = [];
+
+            for (let i = 0; i < maxNumberForOwlCarousel; i++) {
+                if (posts[i]) {
+                    posts[i].date = String(posts[i].date).slice(0, 15);
+                    threePosts.push(posts[i]);
+                }
+            }
+
             if (req.user) {
-                const {role, username:name} = req.user;
+                const {role, username: name} = req.user;
                 if (role === 'admin')
-                    res.render('index', {isAdmin: true, role: true, name, items});
-                else res.render('index', {isAdmin: false, role: true, name, items});
+                    res.render('index', {isAdmin: true, role: true, name, items, threePosts});
+                else res.render('index', {isAdmin: false, role: true, name, items, threePosts});
             }
             else {
-                res.render('index', {warning_msg: Msgs.Login(), items});
+                res.render('index', {warning_msg: Msgs.Login(), items, threePosts});
             }
         })
         .catch(err => console.log(err));

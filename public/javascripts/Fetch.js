@@ -29,6 +29,53 @@ class Fetch {
         });
     }
 
+    // get all posts from DB by fetch and put into the HTML code of page three last posts
+    async showThreeLastPosts(posts) {
+
+        const parentElement = document.querySelector('.owl-stage');
+        const maxNumberOfPosts = 3;
+
+        console.log("VSOGO POSTIV:" + posts.length);
+        for (let i = 0; i < maxNumberOfPosts; i++) {
+            if (posts[i]) {
+                const divWithPost = document.createElement('div');
+                const date = moment(posts[i].date).format('MMMM Do, YYYY');
+                const {
+                    category: {
+                        category: categoryName
+                    },
+                    mainimage,
+                    title
+                } = posts[i];
+
+                divWithPost.className = 'owl-item cloned';
+                divWithPost.setAttribute('style', 'width: 1349px;');
+
+                const singlePost = `
+ <!-- Single Blog Post -->
+                <div class="hero-blog-post bg-img bg-overlay" style="background-image: url(/uploads/imgs/${mainimage});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <!-- Post Contetnt -->
+                    <div class="post-content text-center">
+                        <div class="post-meta" data-animation="fadeInUp" data-delay="100ms">
+                            <a href="#">${date}</a>
+                            <a href="archive.html">${categoryName}</a>
+                        </div>
+                        <a href="video-post.html" class="post-title" data-animation="fadeInUp" data-delay="300ms">${title}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                `;
+                divWithPost.innerHTML = singlePost;
+                parentElement.appendChild(divWithPost);
+            }
+        }
+    }
+
     // get all posts from DB by fetch and put into the HTML code of page
     async showPosts() {
         const parentElement = document.querySelector('.mainDiv');
@@ -38,6 +85,8 @@ class Fetch {
 
         const data = await res.json();
         const {posts} = data;
+
+        // await this.showThreeLastPosts(posts);
 
         posts.map((post) => {
 
@@ -110,6 +159,7 @@ class Fetch {
             parentElement.appendChild(divWithPost);
         });
     }
+
 
     // get all comments from DB by fetch for some single post and show comments in single-post.hbs
     async showComments() {
