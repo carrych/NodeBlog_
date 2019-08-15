@@ -17,7 +17,7 @@ Users and admins can create posts and comments, guests can add only comments.
 ```
 Issues
 ----
-I made merge from branch develope to branch master. And still this branch has only readme file (all files in branch - develop).
+I have made merge from branch develope to branch master and still this branch has only readme file (all files in branch - develop).
 
 Quick start
 ----
