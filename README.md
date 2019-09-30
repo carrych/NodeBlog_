@@ -12,6 +12,12 @@ Description
 This is project for study.
 It's special blog, where only admin can add users and others admins ;)
 Also admin can create different categories for posts.
+
+Admin info for test:
+Email: blackjack@mail.ua
+Password: 1234Qwer_
+
+
 This blog has back-end on Node.js (session strategy) + MongoDB.
 Users and admins can create posts and comments, guests can add only comments.
 ```
