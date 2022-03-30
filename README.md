@@ -9,7 +9,7 @@ Release: https://github.com/carrych/NodeBlog_/releases
 Description
 ----
 ```
-This is project for study.
+This is test task for study Node.js
 It's special blog, where only admin can add users and others admins ;)
 Also admin can create different categories for posts.
 
